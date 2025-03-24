@@ -11,27 +11,6 @@ Anotações e resumos teóricos
 Python 3.12
 
 🚀 Como utilizar?
-Clone este repositório:
-
-bash
-Copiar
-Editar
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
-Crie um ambiente virtual (opcional, mas recomendado):
-
-bash
-Copiar
-Editar
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate  # Windows
-Instale as dependências:
-
-bash
-Copiar
-Editar
-pip install -r requirements.txt
-Explore os notebooks e códigos!
 
 📌 Objetivo
 Este repositório servirá como um guia de aprendizado contínuo, onde irei documentar meu progresso e compartilhar insights sobre Machine Learning.
