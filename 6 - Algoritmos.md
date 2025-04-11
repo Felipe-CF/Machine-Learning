@@ -1,4 +1,4 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM)
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística
 
 
 ## Naive Bayes 
@@ -87,6 +87,8 @@ svm = SVC(kernel='rbf', random_state=1, C=2)
 
 svm.fit(x_train, y_train)
 '''
+
+## Regressão logística
 
 
 
