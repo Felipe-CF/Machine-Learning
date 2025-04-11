@@ -20,7 +20,7 @@ CLassificador probabilístico baseado no teorema de Bayes.
 Consiedrar atributos independentes, **atribui nula probabilidade** quando uma classe contida no teste não se apresente no treino.
 
 
-## Código
+### Código
 
     x_train, x_test, y_train, y_test = train_test_split(previsores3, alvo, random_state=0, test_size=0.3) 
 
@@ -90,6 +90,38 @@ svm.fit(x_train, y_train)
 
 ## Regressão logística
 
+Recebe esse nome devido a utilização de conceitos de **regressão linear** em seu modelo matemático. Ela pode ser **usada em problemas binários**, variável dependente binária (duas saídas),  **ou multinomila** (variável dependente com mais de duas categorias)
 
+![Formula](https://imgur.com/KxTBsV7.jpg)
+
+* p= probabilidade de pertencer a determinada classe
+* e= número de Euler
+* b0= intercepto
+* bn= coeficientes
+* xn= variáveis dependentes
+
+### Comportamento
+
+A **regressão linear** tende a extrapolar os limites pois: 𝑥 → ±∞,  y → ±∞. Isso é problemático quando se trata de probabilidades (entre 0 e 1). Já a **logística** limita a saída a: 0 < y < 1. Ela é ideal para **prever probabilidade de eventos binários** (sim ou não).
+
+![Comparação entre as regressões](https://imgur.com/OB1uQ53.jpg)
+
+O **limiar de decisão** é usado para escolher/definir o resultado, pois caso o **valor esteja acima**, a **saída será 1**, **se for menor será 0**.
+
+### Vantagens
+
+* fácil implementação
+* teoria consolidada
+* excelente desempenho
+* indica o valor de probabilidade para cada instância 
+
+### Código e Parâmetros
+
+* C =
+* penalty = evita overfitting, multicolinearidade
+* max_iter = evita overfitting e tornar o modelo mais simples e generalizável
+* solver = algoritmo que busca otimização e menor erro possível (ligado com o 'penalty')
+* max_iter = limite de iterações que o algoritmo terá para melhorar o resultado
+* tol = trabalha junto com 'max_iter' definindo o limite de erros
 
 
