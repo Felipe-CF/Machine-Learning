@@ -1,4 +1,4 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest, XGBOOST ()
 
 > Resultados usando a base heart_tratado.csv
 
@@ -192,3 +192,12 @@ Em *problemas de classificação* o resultado que *mais aparece* será o escolhi
 |Pouca probabilidade de ocorrência de overfitting.|---|
 
 
+## XGBOOST
+
+Algoritmo poderoso baseado em árvores de decisão.
+
+É uma evolução do algoritmo Gradient Boosting (aumento de Gradiente) que por sua vez é uma evolução do Random Forest.
+
+Apresenta aderência a grande variedades de aplicações.
+
+Roda em várias linguagens de programação, nos principais sistemas operacionais e em nuvem.
