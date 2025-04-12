@@ -1,4 +1,4 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias
 
 
 ## Naive Bayes 
@@ -117,11 +117,13 @@ O **limiar de decisão** é usado para escolher/definir o resultado, pois caso o
 
 ### Código e Parâmetros
 
-* C =
+* C = controla a tolerância dos erros (separa as classes).
 * penalty = evita overfitting, multicolinearidade
-* max_iter = evita overfitting e tornar o modelo mais simples e generalizável
+* max_iter = evita overfitting e torna o modelo mais simples e generalizável definindo limite de iterações que o algoritmo terá para melhorar o resultado 
 * solver = algoritmo que busca otimização e menor erro possível (ligado com o 'penalty')
 * max_iter = limite de iterações que o algoritmo terá para melhorar o resultado
 * tol = trabalha junto com 'max_iter' definindo o limite de erros
 
+
+## Aprendizagem baseada em instâncias
 
