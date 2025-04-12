@@ -1,4 +1,4 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest, XGBOOST ()
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest, XGBOOST, Light GBM (Light Gradient Boosting Machine)
 
 > Resultados usando a base heart_tratado.csv
 
@@ -201,3 +201,30 @@ Algoritmo poderoso baseado em árvores de decisão.
 Apresenta aderência a grande variedades de aplicações.
 
 Roda em várias linguagens de programação, nos principais sistemas operacionais e em nuvem.
+
+
+## Light GBM (Light Gradient Boosting Machine)
+
+Sendo baseado em árvores de decisão, ele é uma evolução do algoritmo *Gradient Boosting* (aumento de
+gradiente) que por sua vez é uma evolução do R*andom Forest*. Tem alta velocidade de processamento.
+
+No LGBM a **árvore cresce em folhas** enquanto que nos outros algoritmos baseados em árvore crescem em níveis.
+
+![Crescimento do LGBM](https://imgur.com/mB3Pj5j.jpg)
+
+O Light GBM trabalha muito bem com grandes quantidades de dados e não é recomendado para trabalhar com poucos dados. Possui mais de 100 hiperparâmetros para ajuste.
+
+### Hiperparâmetros
+**Ajuste**
+* num_leaves = define o número de folahs a serem formadas em uma árvore
+* max_depth = profundidade máxima ou nível até o qual a árvore pode crescer
+
+**Velocidade**
+* learning_rate = taxa de aprendizagem
+* max_bin = reduz o tempo de processamento com valor menor, pois agrupa os valores do recurso em caixas discretas, o que é mais barato computacionalmente
+
+**Precisão**
+* num_leaves = valor alto, árvores profundas (tende a overfitting)
+* max_bin = valores altos tem ef eito semelhante ao 'num_leaves' (treino mais lento também)
+ 
+
