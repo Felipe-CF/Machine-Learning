@@ -1,4 +1,4 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest, XGBOOST, Light GBM (Light Gradient Boosting Machine)
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest, XGBOOST, Light GBM (Light Gradient Boosting Machine), CatBoost (category boosting)
 
 > Resultados usando a base heart_tratado.csv
 
@@ -227,4 +227,30 @@ O Light GBM trabalha muito bem com grandes quantidades de dados e não é recome
 * num_leaves = valor alto, árvores profundas (tende a overfitting)
 * max_bin = valores altos tem ef eito semelhante ao 'num_leaves' (treino mais lento também)
  
+
+## CatBoost (category boosting)
+
+Baseado em **árvores de decisão**, com apredizagem supervisionada de classificação e regressão.
+
+É uma evolução do algoritmo *Gradient Boosting* (aumento de gradiente) que por sua vez é uma evolução do *Random
+Forest*.
+
+Alta velocidade de processamento.
+
+**Executa automaticamente as transformações das variáveis categóricas.**
+
+Trabalha com eficiência em grandes e baixos volumes de dados.
+
+### Vantagens
+
+* CatBoost permite o treinamento de dados em várias GPUs.
+* Fornece ótimos resultados com parâmetros padrão.
+* Oferece maior precisão devido ao ajuste excessivo reduzido.
+* Pode lidar com valores ausentes internamente.
+* Pode ser usado para problemas de regressão e classificação.
+
+### Documentação
+
+https://catboost.ai/docs/en/
+
 
