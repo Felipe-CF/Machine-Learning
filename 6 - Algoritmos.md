@@ -164,3 +164,31 @@ nós descendentes então o nó é transformado em folha.
 
 ## Random Forest
 
+Criação aleatória de várias árvores de decisão.
+
+Utiliza o método Ensemble (construção de vários modelos para obter um resultado único).
+
+É mais robusto, complexo e normalmente propicia resultados melhores, mas possui maior custo computacional.
+
+Em *problemas de classificação* o resultado que *mais aparece* será o escolhido (moda), já em **regressão será a média**.
+
+![Ilustração](https://imgur.com/K41BnRM.jpg)
+
+### Diferenças referente a Árvore de decisão
+
+|Árvore de decisão|Random Forest|
+|---|---|
+|apenas uma árvore|conjunto de árvores.|
+|cria regras para seleção das melhores variáveis|seleção das variáveis aleatoriamente.|
+|resultado é “fruto” de uma única árvore|resultado é a moda ou média de todas as árvores.|
+
+### Vantagens X Desvantagens
+
+|Vantagens|Desvantagens|
+|---|---|
+|Resultados bastante precisos.|Velocidade de processamento relativamente baixa|
+|Normalmente não necessitam de preparações sofisticadas nos dados (label Encoder e OneHot Encoder)|Difícil interpretação de como chegou no resultado|
+|Trabalha com valores faltantes, variáveis categóricas e numéricas.|---|
+|Pouca probabilidade de ocorrência de overfitting.|---|
+
+
