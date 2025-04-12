@@ -1,5 +1,11 @@
-# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias
+# Naive Bayes, Máquina de vetor de suporte (SVM), Regressão logística, Aprendizagem baseada em instâncias (KNN), Árvores de decisão (decision tree), Random Forest
 
+> Resultados usando a base heart_tratado.csv
+
+Bayes = 
+SVM =
+Regressão logística =
+KNN = Acurácia: 89.39% , Acertos: 276, 
 
 ## Naive Bayes 
 
@@ -125,5 +131,36 @@ O **limiar de decisão** é usado para escolher/definir o resultado, pois caso o
 * tol = trabalha junto com 'max_iter' definindo o limite de erros
 
 
-## Aprendizagem baseada em instâncias
+## Aprendizagem baseada em instâncias (KNN)
+
+Define agrupamento nos dados e, ao chegar bivis dados, traça uma área ao redor dele para identificar a que grupo ele pertence.
+
+![KNN](https://imgur.com/5TKGFoh.jpg)
+
+
+## Árvores de decisão (decision tree)
+
+Aplicado em problemas de aprendizagem supervisionada tanto de **classificação (mais utilizado)** como de **regressão**.
+
+Seleciona a ordem que os atributos irão aparecer na árvore, *sempre de cima para baixo*, conforme sua *importância para a predição*, assim como determina a separação dos ramos da árvore.
+
+![Exemplo](https://imgur.com/j0LO8iV.jpg)
+
+### Podagem
+
+Objetiva diminuir a probabilidade de overfitting.
+Pode ser de duas formas:
+
+1) Pré-podagem: parar o crescimento da árvore.
+2) Pós-podagem: poda com a árvore já completa.
+
+**Processo de podagem**:
+- Percorre a árvore em profundidade.
+- Para cada nó de decisão calcula o erro no nó e a soma dos erros nos nós descendentes.
+- Se o erro do nó é menor ou igual à soma dos erros dos
+nós descendentes então o nó é transformado em folha.
+
+
+
+## Random Forest
 
