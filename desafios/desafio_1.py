@@ -22,6 +22,33 @@ Dataset referente diagnóstico de tumor benigno/maligno de mama
 '''
 
 def alg_lgbm():
+    load_dotenv()
+
+    data_dir = os.getenv('DESAFIO_1')
+
+    dados = pd.read_csv(os.path.join(data_dir, 'data_cancer2.csv'), index_col=None)
+
+    dados_frame = pd.DataFrame.copy(dados)
+
+    dados_frame_catboost = pd.DataFrame.copy(dados)
+
+    print(dados_frame_catboost.head)
+
+    dados_frame = dados_frame.loc[:, ~dados_frame.columns.str.contains('^Unnamed')]
+
+    dados_frame['diagnosis'].replace(
+        {
+            'M': 1,
+            'B': 0
+        }, inplace=True
+    )
+
+    alvo = dados_frame.iloc[:, 1]
+
+    previsores = dados_frame.iloc[:, 2:32]
+
+    previsores_escalonados = StandardScaler().fit_transform(previsores)
+
     x_train, x_test, y_train, y_test = train_test_split(previsores_escalonados, alvo, test_size=0.3, random_state=0)
 
 
@@ -70,14 +97,14 @@ def alg_lgbm():
 
 
     print("   ===   Validação Cruzada ===  ") 
-    # kfold = KFold(n_splits=30, shuffle=True, random_state=5) # separando os dados em grupos
+    kfold = KFold(n_splits=30, shuffle=True, random_state=5) # separando os dados em grupos
 
-    # modelo = lgb.LGBMClassifier(num_leaves=200, objective= 'binary', max_depth=4,
-    #                             learning_rate=  0.09, max_bin=200)
+    modelo = lgb.LGBMClassifier(num_leaves=200, objective= 'binary', max_depth=4,
+                                learning_rate=  0.09, max_bin=200)
 
-    # resultado = cross_val_score(modelo, previsores, alvo, cv=kfold)
+    resultado = cross_val_score(modelo, previsores, alvo, cv=kfold)
 
-    # print(f"Acurácia: {(resultado.mean()*100):.2f}%  \n")
+    print(f"Acurácia: {(resultado.mean()*100):.2f}%  \n")
 
 
 def alg_xgboost():
@@ -287,13 +314,5 @@ def alg_rand_forest():
 
 
 if __name__ == '__main__':
-
     alg_lgbm()
 
-    # alg_xgboost()
-
-    # alg_svm()
-
-    # alg_catboost()
-
-    # alg_rand_forest()
