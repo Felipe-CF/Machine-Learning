@@ -28,8 +28,6 @@ print(f"Classificação report \n {report_classificacao} \n")
 print("   ===  Previsões de treino ===  ") 
 previsoes_xgboost = xgboost.predict(x_train)
 
-# print(f"{previsoes_xgboost}\n")
-
 acuracia = accuracy_score(y_train, previsoes_xgboost) # acuracia da previsão
 
 print(f"Acurácia: {(acuracia*100):.2f}%  \n")
@@ -46,7 +44,7 @@ print(f"Classificação report \n {report_classificacao} \n")
 
 kfold = KFold(n_splits=30, shuffle=True, random_state=5) # separando os dados em grupos
 
-modelo = XGBClassifier(max_depth=2, learning_rate=0.05, n_estimators=210, objective='binary:logistic', random_state=3)
+modelo = XGBClassifier(max_depth=2, learning_rate=0.9, n_estimators=210, objective='binary:logistic', random_state=3)
 
 resultado = cross_val_score(modelo, previsores, alvo, cv=kfold)
 
