@@ -40,6 +40,33 @@ Porcentagem da variação de *y* que pode ser explicada pela relação de *x e y
 
 ## Regressão Linear Simples
 
+Utilizado posteriormente à análise de correlação linear.
+
+**Fórmula**
+`y = mx + b`
+
+A equação é obtida após um ajuste de uma reta no gráfico de disperção com resíduo mínimo, isso é feito com a **linha de regressão**, que contém valore teóricos próximo aos plotados no gráfico.
+
+`Linha de regressão`
+É aquela que melhor se ajusta aos dados plotados, onde **a soma dos quadrados dos resíduos seja mínima**. Assim temos:
+
+> para um dado x, temos d = (valor y observado) - (valor y previsto)
+
+`Modelo matemático`
+
+* y = mx + b
+
+    n * somat(xy) - somat(x) * somat(xy) 
+m = ---------------------------------------
+    n + somat(x²) - (somat(x)²)
+
+b = media(y) - m*media(x)
+
+    somat(y)          somat(x)
+b = ---------  -  m * --------
+        n               n
+
+
 ## Regressão Linear Múltipla
 
 ## Máquina de vetor de suporte (SVM)
