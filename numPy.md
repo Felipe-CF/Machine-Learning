@@ -1,5 +1,0 @@
-# numPy
-
-
-## Vetores
-
