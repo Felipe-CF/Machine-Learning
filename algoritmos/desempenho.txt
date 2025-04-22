@@ -1,0 +1,24 @@
+XGBOOST 
+    coef de determinação de treino: 92.90%
+    coef de determinação de teste: 84.38%
+    Coef. determinação médio: 82.97%
+
+RANDOMFOREST 
+    coef de determinação de treino: 91.59%
+    coef de determinação de teste: 84.48%
+    Coef. determinação médio: 82.83%
+
+LGBM
+    coef de determinação de treino: 88.15%
+    coef de determinação de teste: 82.18%
+    Coef. determinação médio: 82.26%
+    
+SVR 
+    coef de determinação de treino: 87.15%
+    coef de determinação de teste: 81.88%
+    Coef. determinação médio: 82.37%
+
+ARVOREDECISAO
+    coef de determinação de treino: 86.76%
+    coef de determinação de teste: 81.39%
+    Coef. determinação médio: 76.15%

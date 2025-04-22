@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from bases.dados_tratados import *
 from sklearn.svm import SVR
+import lightgbm as lgb
 from xgboost import XGBRegressor
 from catboost import CatBoostRegressor
 from sklearn.tree import DecisionTreeRegressor
