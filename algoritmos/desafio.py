@@ -3,8 +3,7 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 from sklearn.ensemble import RandomForestRegressor
-from xgboost import XGBRegressor
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import KFold, cross_val_score, train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
