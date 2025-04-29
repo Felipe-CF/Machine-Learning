@@ -14,59 +14,47 @@ from sklearn.preprocessing import StandardScaler
 
 warnings.filterwarnings('ignore')
 
-#   === criando algoritmo   ===
+# com todos os atributos
 
-# rendimento e pontuacao  
-dados_df = dados_frame.iloc[:, [2, 3]].values
+scaler = StandardScaler()
 
-# definindo klusters
+dados_frame_esc = scaler.fit_transform(dados_frame)
+
 wcss = []
 
-for i in range(1, 11):
+for i in range(1, 15):
     kmeans = KMeans(n_clusters=i, init='k-means++',  random_state=5, max_iter=300)
 
-    kmeans.fit(dados_df)
+    kmeans.fit(dados_frame_esc)
 
-    wcss.append(kmeans.inertia_) # gerar o wscss
+    wcss.append(kmeans.inertia_)
 
 # Gráfico
-# plt.figure(figsize=(10, 5))
-# sns.lineplot(x=range(1, 11), y=wcss, marker='o', color='red')
-# plt.title('Elbow method')
-# plt.xlabel('n° clusters')
-# plt.ylabel('WCSS')
-# plt.show()
+plt.figure(figsize=(10, 5))
+sns.lineplot(x=range(1, 15), y=wcss, marker='o', color='red')
+plt.title('Elbow method')
+plt.xlabel('n° clusters')
+plt.ylabel('WCSS')
+plt.show()
 
-'''
-resultado: 4 clusters
-'''
-# agrupamento
-kmeans = KMeans(n_clusters=4, init='k-means++',  random_state=5, max_iter=300)
+kmeans = KMeans(n_clusters=6, init='k-means++',  random_state=5, max_iter=300)
 
-kmeans2 = kmeans.fit(dados_df)
+kmeans2 = kmeans.fit(dados_frame_esc)
 
-# coordenadas dos centroides
-centroides = kmeans2.cluster_centers_
+centroides = scaler.inverse_transform(kmeans2.cluster_centers_)
 
-# classificação dos dados
+dados_dataframe = scaler.inverse_transform(dados_frame_esc)
+
 classificacao = kmeans2.labels_
 
-# visualizar o agrupamento
-graf = px.scatter(x=dados_df[:, 0], y=dados_df[:, 1], color=classificacao)
-graf2 = px.scatter(x=centroides[:, 0], y=centroides[:, 1], size=[15,15,15,15]) # size = qnt de clusters
-graf3 = go.Figure(data=graf.data+graf2.data)
-graf3.update_layout(width=800, height=500, title_text='Agrupamento K-Means')
-graf3.update_xaxes(title='rendimento')
-graf3.update_yaxes(title='pontuacao')
-graf3.show()
-
-# lista de grupos
 agrupamento = pd.DataFrame(classificacao, columns=['grupo'])
 
-# concatenar com o dataframe dos clientes, gerando a identificação por grupo
-dados_concat = pd.concat([dados, agrupamento], axis=1)
+dados_concat = pd.concat([dados_frame, agrupamento], axis=1)
 
 print(dados_concat.head())
+print(dados_frame.iloc[125, :])
+
+
 
 
 

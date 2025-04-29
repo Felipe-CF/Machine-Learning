@@ -28,5 +28,5 @@ dados_frame['genero'].replace({
 
 dados_frame = dados_frame.drop(columns='cliente_id', axis=1)
 
-dados_frame_esc = StandardScaler().fit_transform(dados_frame)
+
 
