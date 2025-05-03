@@ -1,4 +1,4 @@
-# Agrupamento - K-Means, Hierárquico
+# Agrupamento - K-Means, Hierárquico, DBSCAN, Meanshift
 
 O aprendizado por agrupamento é uma técnica que organiza um conjunto de dados em grupos ou `clusters`, onde os dados *dentro de cada grupo* são *mais semelhantes entre si* do que com os dados de outros grupos. É uma forma de aprendizado não supervisionado, pois *não requer rótulos* ou *categorias pré-definidas* para os dados.
 
@@ -31,4 +31,35 @@ A **raiz da árvore** reúne **todas as amostras**, sendo as folhas com apenas u
 |**completa**|Conecta os clusters se baseando na maior das distâncias entre os pares de clusters|
 |**ward**|Conecta os clusters se baseando na soma das diferenças quadradas em todos os clsuters|
 
+
+## DBSACN - Agrupamento Espacial de Aplicações com Ruído Baseado em Densidade
+
+Mais rápido que o `kmeans` e o `hierárquico`, trabalhando bem com **outliers**. Bom para dados qeu contêm **clusters de densidade semelhante**, pois encontra amostras centrais de alta densidade e expande clsuters a partir delas. 
+
+`Funcionamento`: começa em um ponto aleatório. Se sua vizinhaça *e* contiver pontos suficientes, *um cluster é iniciado*. Do contrário, ele é rotulado como **ruído**.
+
+Requer 2 parâmetros:
+
+```
+ e (eps): raio de alance
+
+min_smaples: quantidade mínima de pontos necessários para formar um cluster.
+```
+
+### Vantagens
+* Não exige especificação do número de clusters, podendo encontrar eles de forma arbitrária.
+
+* Robusto a outliers.
+
+* Requer 2 parâmetros e é mais rápido.
+
+### Desvantagens
+* Pode não agrupar bem conjuntos de dados com grandes diferenças de densidades.
+
+* Pode ser difícil escolher um limite de distância adequado.
+
+
+## Meanshift
+
+Ele cria uma **área de interesse**, onde um *vetor* indica em qual direção se encontra a *maior densidade de dados*. Após isso ele reconfigura o centro de interesse para mais próximo do **centro de massa**. Ele é aplicado em processamento de imagens e visão computacional. 
 
