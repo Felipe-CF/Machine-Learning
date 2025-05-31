@@ -3,7 +3,7 @@ import tensorflow as tf
 from activations import *
 
 
-'''
+"""
         BIAS:
             pelas bias não serem gerados no sizes[0], fica entendido que esta será a camada de entrada
             são matrizes 2D numpy 
@@ -22,7 +22,7 @@ from activations import *
 
             temos que o peso Wjk é "o peso para conexão do neurônio k-esimo"
             com "o neurônio j-esimo da camada seguinte"
-'''
+"""
 
 class Network(object):
     def __init__(self, sizes):
@@ -30,8 +30,10 @@ class Network(object):
         
         self.sizes = sizes # n° neuronios nas respectivas camadas
 
-        # iniciados aleatoriamente gerando distribuições gaussianas (normais)
-        # com média de 0 e desvio padrão 1
+        """
+        iniciados aleatoriamente gerando distribuições gaussianas (normais)
+        com média de 0 e desvio padrão 1
+        """
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
 
         self.weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
@@ -53,12 +55,10 @@ class Network(object):
             n_test = len(test_data)
         
         for j in range(epochs): # em cada epoca...
-            random.shuffle(training_data) # randomiza os dados de treino...
+            random.shuffle(training_data) 
 
-            # e reparte eles em mini-lotes apropriados
             mini_batches = [training_data[k:k+mini_batch_size] for k in range(0, n, mini_batch_size)]
 
-            # para cada mini_batch aplicamos um único passo de descida do gradiente
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
             
@@ -67,8 +67,7 @@ class Network(object):
             else:
                 print("Epoch {} finalizada".format(j))
 
-    # atualiza os pesos e os bias da rede
-    # de acordo com uma iteração de descida de gradiente
+
     def update_mini_batch(self, mini_batch, eta):
         nabla_b = [np.zeros(b.shape) for b in self.biases]
 
@@ -86,7 +85,57 @@ class Network(object):
         self.biases = [b-(eta/len(mini_batch))*nb for b, nb in zip(self.biases, nabla_b)]
 
 
-    def backprop():
+    def backprop(self, x, y):
+        """
+        Retorna uma tupla (nabla_b, nabla_w) representado o gradiente para dunção de custo C_x.
+        `nabla_b` e `nabla_w` são listas de camadas de matrizes numpy, semelhantes a `biases` e `weights` 
+        """
+        nabla_b = [np.zeros(b.shape) for b in self.biases]
+
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        activation = x # feedworward
+        
+        activations = [x] # lista com todas as ativações, camada por camada
+
+        zs = [] # lista com todos os vetores z, camada por camada
+
+        for b, w, in zip(self.biases, self.weights):
+            z = np.dot(w, activation)+b
+
+            zs.append(z)
+
+            activation = sigmoid(z)
+
+            activations.append(activation)
+        
+        #backward pass
+        delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+
+        nabla_b[-1] = delta
+
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        # Aqui, l=1 significa a ultima camada de neurônios, l=2 é a segunda e assim por diante
+        for l in range(2, self.num_layers):
+            z = zs[-l]
+
+            sp = sigmoid_prime(z)
+
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+
+            nabla_b[-l] = delta
+
+            nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+        
+        return (nabla_b, nabla_w)
+            
+
+
+
+
+        
+        
         pass    
 
         
