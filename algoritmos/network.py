@@ -86,6 +86,7 @@ class Network(object):
 
 
     def backprop(self, x, y):
+<<<<<<< HEAD:algoritmos/network.py
         """
         Retorna uma tupla (nabla_b, nabla_w) representado o gradiente para dunção de custo C_x.
         `nabla_b` e `nabla_w` são listas de camadas de matrizes numpy, semelhantes a `biases` e `weights` 
@@ -103,11 +104,30 @@ class Network(object):
         for b, w, in zip(self.biases, self.weights):
             z = np.dot(w, activation)+b
 
+=======
+        nabla_b = [np.zeros(b.shape) for b in self.biases]    
+
+        nabla_w = [np.zeros(w.shape) for w in self.weights]
+
+        # feedforward
+        activation = x
+
+        # lista para armazenar todas as ativações, camada por camada
+        activations = [x]
+
+        # lista para armazenar todas os vetores z, camada por camada
+        zs = []
+
+        for b, w in zip(self.biases, self.weights):
+            z = np.dot(w, activation)+b
+            
+>>>>>>> 1fcf47b5dd5dcdfa20e95a7bb6439b27704e609f:algoritmos/caligrafia.py
             zs.append(z)
 
             activation = sigmoid(z)
 
             activations.append(activation)
+<<<<<<< HEAD:algoritmos/network.py
         
         #backward pass
         delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
@@ -119,6 +139,17 @@ class Network(object):
         # Aqui, l=1 significa a ultima camada de neurônios, l=2 é a segunda e assim por diante
         for l in range(2, self.num_layers):
             z = zs[-l]
+=======
+
+        delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+        
+        nabla_b = delta
+        
+        nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+        for l in range(2, self.num_layers):
+            z= zs[-l]
+>>>>>>> 1fcf47b5dd5dcdfa20e95a7bb6439b27704e609f:algoritmos/caligrafia.py
 
             sp = sigmoid_prime(z)
 
@@ -127,6 +158,7 @@ class Network(object):
             nabla_b[-l] = delta
 
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+<<<<<<< HEAD:algoritmos/network.py
         
         return (nabla_b, nabla_w)
             
@@ -137,6 +169,12 @@ class Network(object):
         
         
         pass    
+=======
+
+        return (nabla_b, nabla_w)
+
+
+>>>>>>> 1fcf47b5dd5dcdfa20e95a7bb6439b27704e609f:algoritmos/caligrafia.py
 
         
 rede = Network([2, 3, 1])
