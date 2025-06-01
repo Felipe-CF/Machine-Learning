@@ -133,7 +133,7 @@ Eles serão somados a cada iteração (entrada) para obtermos um **gradiente mé
 
 ### atualizando...
     self.weights = [w-(eta/len(mini_batch))*nw for w, nw in zip(self.weights, nabla_w)]
-    
+
 Esse passo é feito através da regra delta:
 
 ​![regra delta](https://imgur.com/DmT49Fp.png)
@@ -141,6 +141,89 @@ Esse passo é feito através da regra delta:
 Por usamos o **gradiente médio** do batch, o `eta` é dividido pelo tamanho do mini-lote, fazendo com que a atualização reflita a média dos gradientes dos exemplos. Assim temos:
 
 ​![regra delta do gradiente médio](https://imgur.com/8MsBzgJ.png)
+
+
+## Backpropagation
+
+Aqui nós teremos outra parte fundamental, onde iremos calcular as `derivadas parciais da função de custo`, em relação a cada *peso* e *viés*. Isso é feito propagando o `erro da saída da rede` (última camada) de volta para a entrada dela.
+
+    delta = self.cost_derivative(activations[-1], y) * sigmoid_prime(zs[-1])
+
+### O erro
+Esta é a "Equação BP1" da backpropagation (ou uma variante dela), que diz que `o erro na camada de saída` é a **derivada do custo** em relação **à ativação da saída**, multiplicada pela **derivada da função de ativação**
+
+O `erro da saída da rede` mede o `quanto quanto o resultado obtido esta distante do esperado` (y), bem como a correção (baseado no grandiente *sigmoid*) para que o que obtemos se aproxime do esperado. O `delta` será um vetor NumPy com as mesmas dimensões da saída da rede.
+
+![erro](https://imgur.com/5q2Mv4T.png)
+
+Partida da `regra da cadeia` (*chain rule*) temos: 
+
+![erro](https://imgur.com/0KWoxDP.png)
+
+→ Derivada da função de custo em relação à `ativação de saída` (o quanto a predição errou)
+
+    self.cost_derivative(activations[-1], y)
+
+→ Derivada da função de ativação (sigmoid, ReLU...) aplicada à `saída da camada` (produto escalar)
+
+    sigmoid_prime(zs[-1])
+
+
+**Exemplo**
+
+```
+activations[-1] = [[0.9], [0.1], [0.8]]  # saída obtida de 3 neurônios
+
+y = [[1.0], [0.0], [1.0]] # saída esperada
+
+self.cost_derivative(activations[-1], y) = [[-0.1], [0.1], [-0.2]]
+```
+
+🧠 Intuição da derivada de 𝑎 (sigmoid):
+> Quando a saída a≈0.5, a derivada é máxima (maior sensibilidade).
+
+> Quando a≈0 ou a≈1, a derivada é pequena (função saturada).
+
+Isso mostra o quanto um neurônio pode aprender: ele aprende mais quando está longe dos extremos.
+
+### Vieses
+O gradiente dos vieses da última camada é igual ao delta da camada de saída, pois `o bias afeta linearmente a saída z` e esse gradiente, em relação ao bias, é o próprio erro.
+
+    nabla_b[-1] = delta
+
+### Pesos
+No caso dos pesos, precisamos saber como cada um deles contribuiu para o erro gerado. 
+
+    nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
+Como `delta` é um vetor coluna `(m, 1)` assim como a penúltima ativação da rede `activations[-2]` (n, 1), nós precisamos transpor esse último e obter `(1, n)`. Quando fizermos o `np.dot` vamos ober uma matriz `(m, n)`, tal como são os pesos da rede.
+
+### Propagando...
+
+Esses procedimentos são a base e deverão sofrer repetições ao longo da rede, mas no sentido contrário a ativação dela (backprop). Nós iremos seguir o fluxo abaixo:
+
+1. **pegar a ativação anterior** (*z*)
+    ````
+    z = zs[-l]
+    ````
+2. **calcular a derivada da função de ativação referente a** *z*
+    ````
+     sp = sigmoid_prime(z)
+    ````
+3. **repetir o cálculo do do delta para esta camada, usando os pesos que a conectam a camada seguinte a ela (forward)**
+    ````
+    delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+    ````
+
+4. **atualizar nabla_b**
+    ````
+    nabla_b[-l] = delta
+    ````
+
+5. **atualizar nabla_w**
+    ````
+    nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
+    ````
 
 
 

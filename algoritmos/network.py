@@ -87,7 +87,7 @@ class Network(object):
 
     def backprop(self, x, y):
         """
-        Retorna uma tupla (nabla_b, nabla_w) representado o gradiente para dunção de custo C_x.
+        Retorna uma tupla (nabla_b, nabla_w) representado o gradiente para função de custo C_x.
         `nabla_b` e `nabla_w` são listas de camadas de matrizes numpy, semelhantes a `biases` e `weights` 
         """
         nabla_b = [np.zeros(b.shape) for b in self.biases]
@@ -116,7 +116,7 @@ class Network(object):
 
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
 
-        # Aqui, l=1 significa a ultima camada de neurônios, l=2 é a segunda e assim por diante
+        # Aqui, l=-1 significa a ultima camada de neurônios, l=-2 é a segunda e assim por diante
         for l in range(2, self.num_layers):
             z = zs[-l]
 
