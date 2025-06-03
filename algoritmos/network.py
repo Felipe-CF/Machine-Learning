@@ -94,12 +94,11 @@ class Network(object):
 
         nabla_w = [np.zeros(w.shape) for w in self.weights]
 
-        activation = x # feedworward
+        activation = x 
         
-        activations = [x] # lista com todas as ativações, camada por camada
+        activations = [x] 
 
-        zs = [] # lista com todos os vetores z, camada por camada
-
+        zs = [] 
         for b, w, in zip(self.biases, self.weights):
             z = np.dot(w, activation)+b
 
@@ -120,9 +119,7 @@ class Network(object):
         for l in range(2, self.num_layers):
             z = zs[-l]
 
-            sp = sigmoid_prime(z)
-
-            delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
+            delta = np.dot(self.weights[-l+1].transpose(), delta) * sigmoid_prime(z)
 
             nabla_b[-l] = delta
 
