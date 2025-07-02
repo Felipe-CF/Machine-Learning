@@ -5,14 +5,14 @@ import numpy as np
 
 class Perceptron:
     def __init__(self, learning_rate, epochs):
-        self.weights = np.random.randn(1, 3)
+        self.weights = np.random.randn(1, 3) / 30
         self.learning_rate = learning_rate
         self.epochs = epochs
 
     def validation(self, x):
         for x_k in x:
 
-            y = np.dot(x_k, self.weights.reshape(-1, 1))
+            y = np.dot(x_k, self.weights.reshape(-1, 1)) - 1
 
             prediction =  -1 if y < 0 else 1
 
@@ -32,7 +32,7 @@ class Perceptron:
             error = 0
 
             for x_k, d_k in zip(training_set, outputs):
-                u = np.dot(x_k, self.weights.reshape(-1, 1))
+                u = np.dot(x_k, self.weights.reshape(-1, 1)) - 1
 
                 # symmetric hard limiter - função sinal
                 y = -1 if u < 0 else 1
