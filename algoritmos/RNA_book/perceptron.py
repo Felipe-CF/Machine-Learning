@@ -5,41 +5,44 @@ import numpy as np
 
 class Perceptron:
     def __init__(self, learning_rate, epochs):
-        self.weights = np.random.randn(1, 3) / 30
-        self.learning_rate = learning_rate
-        self.epochs = epochs
+        self.weights = np.random.randn(1, 3)
+        self.weights = np.insert(self.weights, 0, 0)
+
 
     def validation(self, x):
         for x_k in x:
 
-            y = np.dot(x_k, self.weights.reshape(-1, 1)) - 1
+            y = np.dot(x_k, self.weights.reshape(-1, 1))
 
             prediction =  -1 if y < 0 else 1
 
             print(prediction)
     
-    def update_weights(self, x_k, d_k, y):
+    def update_weights(self, x_k, d_k, y, learning_rate):
         y_diff = (d_k - y) * x_k
 
-        diff_learned = self.learning_rate * y_diff
+        diff_learned = learning_rate * y_diff
 
         # regra de Hubb - incremento de pesos
         self.weights = self.weights + diff_learned
 
 
-    def training(self, training_set, outputs):
-        for epoch in range(self.epochs):
+    def training(self, training_set, outputs, learning_rate, epochs):
+
+        for epoch in range(epochs):
             error = 0
 
             for x_k, d_k in zip(training_set, outputs):
-                u = np.dot(x_k, self.weights.reshape(-1, 1)) - 1
+                x_k = np.insert(x_k, 0, -1)
+
+                u = np.dot(x_k, self.weights.reshape(-1, 1))
 
                 # symmetric hard limiter - função sinal
                 y = -1 if u < 0 else 1
 
                 if y != d_k:
                     error += 1
-                    self.update_weights(x_k, d_k, y)
+                    self.update_weights(x_k, d_k, y, learning_rate)
             
             print(f'Training Precision in epoch {epoch+1}: {(error/30)*100:.2f}%')
             
@@ -63,13 +66,13 @@ if __name__ == '__main__':
 
     v = validation_dataset.iloc[:, 1:4]
 
-    learning_rate = float(input('learning_rate '))
+    learning_rate = float(input('\nlearning_rate '))
 
     epochs = int(input('epochs '))
 
-    perceptron = Perceptron(learning_rate, epochs)
+    perceptron = Perceptron()
 
-    perceptron.training(x.values, y.values)
+    perceptron.training(x.values, y.values, learning_rate, epochs)
 
     perceptron.validation(v.values)
 
