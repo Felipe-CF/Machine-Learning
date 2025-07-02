@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 
@@ -13,7 +14,7 @@ class Perceptron:
 
             y = np.dot(x_k, self.weights.reshape(-1, 1))
 
-            prediction =  -1 if y[0] < 0 else 1
+            prediction =  -1 if y < 0 else 1
 
             print(prediction)
     
@@ -22,6 +23,7 @@ class Perceptron:
 
         diff_learned = self.learning_rate * y_diff
 
+        # regra de Hubb - incremento de pesos
         self.weights = self.weights + diff_learned
 
 
@@ -32,6 +34,7 @@ class Perceptron:
             for x_k, d_k in zip(training_set, outputs):
                 u = np.dot(x_k, self.weights.reshape(-1, 1))
 
+                # symmetric hard limiter - função sinal
                 y = -1 if u < 0 else 1
 
                 if y != d_k:
@@ -42,9 +45,15 @@ class Perceptron:
             
  
 if __name__ == '__main__':
-    training_dataset = pd.read_csv("datasets\\training_set.csv", sep=',', encoding='iso-8859-1')
-    
-    validation_dataset = pd.read_csv("datasets\\validation_set.csv", sep=',', encoding='iso-8859-1')
+    perceptron_dir = os.path.dirname(os.path.abspath(__file__))
+
+    training_path = os.path.join(perceptron_dir, "datasets", "training_perceptron.csv")
+
+    validation_path = os.path.join(perceptron_dir, "datasets", "validation_perceptron.csv")
+
+    training_dataset = pd.read_csv(training_path, sep=',', encoding='iso-8859-1')
+
+    validation_dataset = pd.read_csv(validation_path, sep=',', encoding='iso-8859-1')
 
     training_dataset = pd.DataFrame.copy(training_dataset)
 
@@ -54,9 +63,9 @@ if __name__ == '__main__':
 
     v = validation_dataset.iloc[:, 1:4]
 
-    learning_rate = input('learning_rate ')
+    learning_rate = float(input('learning_rate '))
 
-    epochs = input('epochs ')
+    epochs = int(input('epochs '))
 
     perceptron = Perceptron(learning_rate, epochs)
 
