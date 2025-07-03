@@ -4,14 +4,12 @@ import numpy as np
 
 
 class Perceptron:
-    def __init__(self, learning_rate, epochs):
-        self.weights = np.random.randn(1, 3)
-        self.weights = np.insert(self.weights, 0, 0)
-
+    def __init__(self):
+        self.weights = np.random.randn(1, 4)
 
     def validation(self, x):
         for x_k in x:
-
+            x_k = np.insert(x_k, 0, -1)
             y = np.dot(x_k, self.weights.reshape(-1, 1))
 
             prediction =  -1 if y < 0 else 1
@@ -19,16 +17,14 @@ class Perceptron:
             print(prediction)
     
     def update_weights(self, x_k, d_k, y, learning_rate):
-        y_diff = (d_k - y) * x_k
-
-        diff_learned = learning_rate * y_diff
+        diff_learned = learning_rate * (d_k - y) * x_k
 
         # regra de Hubb - incremento de pesos
         self.weights = self.weights + diff_learned
 
 
     def training(self, training_set, outputs, learning_rate, epochs):
-
+        max_precision = 0
         for epoch in range(epochs):
             error = 0
 
@@ -45,6 +41,11 @@ class Perceptron:
                     self.update_weights(x_k, d_k, y, learning_rate)
             
             print(f'Training Precision in epoch {epoch+1}: {(error/30)*100:.2f}%')
+
+            if max_precision < (error/30):
+                max_precision = (error/30)
+
+        print(f'Max Training Precision: {(max_precision)*100:.2f}%')
             
  
 if __name__ == '__main__':
