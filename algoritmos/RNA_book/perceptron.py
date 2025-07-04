@@ -23,12 +23,15 @@ class Perceptron:
         self.weights = self.weights + diff_learned
 
 
-    def training(self, training_set, outputs, learning_rate, epochs):
-        max_precision = 0
-        for epoch in range(epochs):
+    def training(self, dataset, learning_rate):
+        epoch = 0
+
+        erro = False
+
+        while erro is False:
             error = 0
 
-            for x_k, d_k in zip(training_set, outputs):
+            for x_k, d_k in dataset:
                 x_k = np.insert(x_k, 0, -1)
 
                 u = np.dot(x_k, self.weights.reshape(-1, 1))
@@ -37,15 +40,27 @@ class Perceptron:
                 y = -1 if u < 0 else 1
 
                 if y != d_k:
+                    erro = True
+
                     error += 1
+                    
                     self.update_weights(x_k, d_k, y, learning_rate)
             
-            print(f'Training Precision in epoch {epoch+1}: {(error/30)*100:.2f}%')
+            epoch += 1
 
-            if max_precision < (error/30):
-                max_precision = (error/30)
+            print(f'Training Precision in epoch {epoch}: {(error/30)*100:.2f}%')
 
-        print(f'Max Training Precision: {(max_precision)*100:.2f}%')
+            if erro is True:
+                erro = False
+
+            else:
+                break
+
+            
+
+
+
+            
             
  
 if __name__ == '__main__':
@@ -67,13 +82,19 @@ if __name__ == '__main__':
 
     v = validation_dataset.iloc[:, 1:4]
 
-    learning_rate = float(input('\nlearning_rate '))
+    # print(x.values)
 
-    epochs = int(input('epochs '))
+    # print(y.values)
+
+    dataset = [(x, y) for x, y in zip(x.values, y.values)]
+
+    # print(dataset)
+
+    learning_rate = float(input('\nlearning_rate '))
 
     perceptron = Perceptron()
 
-    perceptron.training(x.values, y.values, learning_rate, epochs)
+    perceptron.training(dataset, learning_rate)
 
     perceptron.validation(v.values)
 
