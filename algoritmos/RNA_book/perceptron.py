@@ -57,12 +57,6 @@ class Perceptron:
                 break
 
             
-
-
-
-            
-            
- 
 if __name__ == '__main__':
     perceptron_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -82,13 +76,7 @@ if __name__ == '__main__':
 
     v = validation_dataset.iloc[:, 1:4]
 
-    # print(x.values)
-
-    # print(y.values)
-
     dataset = [(x, y) for x, y in zip(x.values, y.values)]
-
-    # print(dataset)
 
     learning_rate = float(input('\nlearning_rate '))
 
