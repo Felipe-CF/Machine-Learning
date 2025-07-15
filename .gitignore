@@ -178,3 +178,4 @@ cython_debug/
 .vscode
 
 # ignoring datasets
+.jpg
