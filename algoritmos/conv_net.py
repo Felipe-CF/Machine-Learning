@@ -1,17 +1,18 @@
+import os, keras
 import tensorflow as tf
-import os
 from pathlib import Path
 from activations import *
 import numpy as np, random
 from keras.layers import Dense
+from keras import regularizers
 from keras.layers import Conv2D
 from keras.layers import Flatten
 from keras.models import Sequential
 from keras.layers import MaxPooling2D
-from PIL import Image, UnidentifiedImageError
-from keras_preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 from keras.callbacks import ModelCheckpoint
+from PIL import Image, UnidentifiedImageError
+from keras_preprocessing.image import ImageDataGenerator
 
 
 def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
@@ -61,12 +62,28 @@ def create_conv_net():
 
     conv_net.add(Flatten())
 
-    conv_net.add(Dense(units=128, activation='relu'))
+    conv_net.add(Dense(
+        units=128, 
+        activation='relu',
+        # kernel_regularizer=regularizers.L2(0.001)
+        ))
 
-    conv_net.add(Dense(units=1, activation='sigmoid'))
+    conv_net.add(Dense(
+        units=1, 
+        activation='sigmoid',
+        # kernel_regularizer=regularizers.L2(0.001)
+        ))
+
+    optimizer = keras.optimizers.SGD(
+        learning_rate=0.01,
+        momentum=0.9,
+        name="SGD"
+    )
 
     conv_net.compile(
-        optimizer='adam', 
+        # optimizer='adam', 
+        # optimizer=optimizer, 
+        optimizer="SGD", 
         loss='binary_crossentropy', 
         metrics=['accuracy']
         )
@@ -75,6 +92,8 @@ def create_conv_net():
 
 
 def create_sets():
+    path_dir = os.path.dirname(os.path.abspath(__file__))
+
     data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
         # normalização
         rescale=1./255, 
@@ -89,8 +108,7 @@ def create_sets():
     )
 
     training_set = data_gen.flow_from_directory(
-        # 'algoritmos\\datasets\\cnn\\train',
-        'datasets\\cnn\\train',
+        os.path.join(path_dir, 'datasets\\cnn\\train'),
         target_size=(64, 64),
         batch_size=16,
         class_mode='binary',
@@ -98,8 +116,7 @@ def create_sets():
         )
 
     validation_set = data_gen.flow_from_directory(
-        # 'algoritmos\\datasets\\cnn\\train',
-        'datasets\\cnn\\train',
+        os.path.join(path_dir, 'datasets\\cnn\\train'),
         target_size=(64, 64),
         batch_size=16,
         class_mode='binary',
@@ -126,8 +143,11 @@ def prediction(conv_net, image_name):
 
 
 if __name__ == '__main__':
-    # invalid_files('algoritmos\\datasets\\cnn\\train')
-    # invalid_files('datasets\\cnn\\train')
+    path_dir = os.path.dirname(os.path.abspath(__file__))
+
+    train_path_dir = os.path.join(path_dir, 'datasets\\cnn\\train')
+
+    # invalid_files(train_path_dir)
 
     conv_net = create_conv_net()
 
