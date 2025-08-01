@@ -67,6 +67,12 @@ def create_conv_net():
         activation='relu',
         # kernel_regularizer=regularizers.L2(0.001)
         ))
+    
+    conv_net.add(Dense(
+        units=128, 
+        activation='relu',
+        # kernel_regularizer=regularizers.L2(0.001)
+        ))
 
     conv_net.add(Dense(
         units=1, 
@@ -104,7 +110,7 @@ def create_sets():
         horizontal_flip=True, # aleatorio
         # rotation_range=45,
 
-        validation_split=0.3, # separação do subset de validação
+        validation_split=0.2, # separação do subset de validação
     )
 
     training_set = data_gen.flow_from_directory(
