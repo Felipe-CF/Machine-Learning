@@ -229,3 +229,4 @@ Esses procedimentos são a base e deverão sofrer repetições ao longo da rede,
 
 
 
+![alt text](image-1.png)
