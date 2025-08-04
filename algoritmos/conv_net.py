@@ -1,5 +1,5 @@
 import tensorflow as tf
-import os
+import os, keras
 from pathlib import Path
 from activations import *
 import numpy as np, random
@@ -12,6 +12,7 @@ from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 from keras.callbacks import ModelCheckpoint
+from keras import layers
 
 
 def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
@@ -51,17 +52,21 @@ def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
 def create_conv_net():
     conv_net = Sequential()
 
-    conv_net.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3), activation='relu'))
+    conv_net.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3)))
+
+    conv_net.add(layers.LeakyReLU(alpha=0.01))
 
     conv_net.add(MaxPooling2D(pool_size=(2, 2)))
 
-    conv_net.add(Conv2D(32, (3, 3), activation='relu'))
+    conv_net.add(Conv2D(32, (3, 3)))
+    
+    conv_net.add(layers.LeakyReLU(alpha=0.01))
 
     conv_net.add(MaxPooling2D(pool_size=(2, 2)))
 
     conv_net.add(Flatten())
 
-    conv_net.add(Dense(units=128, activation='relu'))
+    conv_net.add(Dense(units=128, activation=layers.LeakyReLU(alpha=0.01)))
 
     conv_net.add(Dense(units=1, activation='sigmoid'))
 
@@ -74,7 +79,10 @@ def create_conv_net():
     return conv_net
 
 
-def create_sets():
+def create_sets(file_dir):
+
+    dataset_dir = os.path.join(file_dir, 'datasets\\cnn\\train')
+
     data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
         # normalização
         rescale=1./255, 
@@ -89,8 +97,7 @@ def create_sets():
     )
 
     training_set = data_gen.flow_from_directory(
-        # 'algoritmos\\datasets\\cnn\\train',
-        'datasets\\cnn\\train',
+        dataset_dir,
         target_size=(64, 64),
         batch_size=16,
         class_mode='binary',
@@ -98,8 +105,7 @@ def create_sets():
         )
 
     validation_set = data_gen.flow_from_directory(
-        # 'algoritmos\\datasets\\cnn\\train',
-        'datasets\\cnn\\train',
+        dataset_dir,
         target_size=(64, 64),
         batch_size=16,
         class_mode='binary',
@@ -131,11 +137,11 @@ if __name__ == '__main__':
 
     conv_net = create_conv_net()
 
-    training_set, validation_set = create_sets()
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    training_set, validation_set = create_sets(file_dir)
 
-    checkpoint_dir = os.path.dirname(os.path.abspath(__file__))
-
-    checkpoint_dir = os.path.join(checkpoint_dir, 'model_checkpoints')
+    checkpoint_dir = os.path.join(file_dir, 'model_checkpoints')
 
     model_checkpoint = ModelCheckpoint(
         filepath=os.path.join(checkpoint_dir, 'conv_net_accuracy_{val_accuracy:.2f}.keras'),
@@ -146,10 +152,14 @@ if __name__ == '__main__':
         verbose=1 # logs de salvamento
     )
 
+    # best_model_path = os.path.join(checkpoint_dir, 'conv_net_accuracy_0.84.keras')
+
+    # new_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
+
     conv_net.fit(
         training_set, 
         steps_per_epoch=1000, 
-        epochs=30,
+        epochs=60,
         validation_data=validation_set,
         validation_steps=450, 
         callbacks=[model_checkpoint]
