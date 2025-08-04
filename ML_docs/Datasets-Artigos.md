@@ -59,6 +59,25 @@ Este documento reúne datasets públicos de imagens rotuladas referentes a doen�
 
 https://zenodo.org/records/5827695
 
+## 7. Email para solicitar o TMC
+Dear Prof. [Name] / Dear Authors,
+
+My name is Felipe Costa, a student/researcher at [your institution or affiliation]. I am currently working on a research project focused on the application of deep convolutional neural networks (CNNs) to classify endoscopic images of ulcerative colitis based on Mayo endoscopic subscore.
+
+I came across your publication describing the TMC-UCM dataset, and I am very interested in utilizing this dataset for non-commercial, academic purposes in my study.
+
+Would it be possible to kindly provide access to the dataset via an alternative download method (e.g. Google Drive, OneDrive, etc.), as I currently face difficulties downloading files from Baidu Pan due to regional restrictions?
+
+Of course, the dataset will be used strictly for academic research and cited accordingly as per your paper and license conditions.
+
+Thank you very much in advance for your support.
+
+Best regards,
+Felipe Costa
+[Your full name]
+[Your institution and program, e.g., Federal Institute of RN – Computer Engineering]
+[Optional: your Lattes, ORCID or LinkedIn]
+[Your email address]
 
 ## Comparativo Rápido
 
