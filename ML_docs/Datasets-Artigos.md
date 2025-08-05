@@ -36,8 +36,6 @@ Este documento reúne datasets públicos de imagens rotuladas referentes a doen�
 - **Tamanho**: grande.
 - **Origem / Artigo**: Borgli et al., Hyper-Kvasir dataset.
 - **Link**: https://datasets.simula.no/hyper-kvasir/
-- **Link**: https://datasets.simula.no/hyper-kvasir/
-
 
 ---
 
