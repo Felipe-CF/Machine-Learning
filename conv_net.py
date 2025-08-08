@@ -1,21 +1,17 @@
 import os, keras
 import tensorflow as tf
-import os, keras
+import pandas as pd
 from pathlib import Path
+from keras import layers
 import numpy as np, random
-from keras.layers import Dense
-from keras import regularizers
-from keras.layers import Conv2D
-from keras.layers import Flatten
+import matplotlib.pyplot as plt
 from keras.models import Sequential
-from keras.layers import MaxPooling2D
 from keras.preprocessing import image
+from keras import regularizers, optimizers
 from keras.callbacks import ModelCheckpoint
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
-from keras.preprocessing import image
-from keras.callbacks import ModelCheckpoint
-from keras import layers
+from keras.layers import Conv2D, Flatten, MaxPooling2D, BatchNormalization, Dense, Dropout, Activation
 
 
 def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
@@ -71,7 +67,7 @@ def create_conv_net():
 
     conv_net.add(Dense(units=128, activation=layers.LeakyReLU(alpha=0.01)))
 
-    conv_net.add(Dense(units=1, activation='sigmoid'))
+    conv_net.add(Dense(units=7, activation='softmax'))
 
     conv_net.compile(
         # optimizer='adam', 
@@ -84,36 +80,44 @@ def create_conv_net():
     return conv_net
 
 
-def create_sets(file_dir):
-
-    dataset_dir = os.path.join(file_dir, 'datasets\\cnn\\train')
+def create_sets():
 
     data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
-        # normalização
         rescale=1./255, 
-
         # augmentation
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
-        # rotation_range=45,
-
         validation_split=0.2, # separação do subset de validação
     )
 
-    training_set = data_gen.flow_from_directory(
-        dataset_dir,
-        target_size=(64, 64),
-        batch_size=16,
-        class_mode='binary',
-        subset='training'
+    dataframe = pd.read_csv(
+        'C:\\Users\\FelipeCF\\Desktop\\Codigos\\Machine-Learning\\DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description.csv',
+        sep=',',
+        encoding='iso-8859-1'
         )
 
-    validation_set = data_gen.flow_from_directory(
-        dataset_dir,
+    training_set = data_gen.flow_from_dataframe(
+        directory='C:\\Users\FelipeCF\\Desktop\\Codigos\\Machine-Learning\\DataCrohnIPI_2021_03\\DataCrohnIPI\\imgs',
+        dataframe=dataframe,
+        x_col='Frame name',
+        y_col='Label',
+        subset='training',
+        batch_size=32,
+        shuffle=True,
+        class_mode='categorical',
+        target_size=(64, 64)
+    )
+
+    validation_set = data_gen.flow_from_dataframe(
+        directory='C:\\Users\FelipeCF\\Desktop\\Codigos\\Machine-Learning\\DataCrohnIPI_2021_03\\DataCrohnIPI\\imgs',
+        dataframe=dataframe,
+        x_col='Frame name',
+        y_col='Label',
         target_size=(64, 64),
-        batch_size=16,
-        class_mode='binary',
+        batch_size=32,
+        class_mode='categorical',
+        shuffle=True,
         subset='validation'
         )
     
@@ -137,17 +141,11 @@ def prediction(conv_net, image_name):
 
 
 if __name__ == '__main__':
-    path_dir = os.path.dirname(os.path.abspath(__file__))
-
-    train_path_dir = os.path.join(path_dir, 'datasets\\cnn\\train')
-
-    # invalid_files(train_path_dir)
-
     conv_net = create_conv_net()
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
     
-    training_set, validation_set = create_sets(file_dir)
+    training_set, validation_set = create_sets()
 
     checkpoint_dir = os.path.join(file_dir, 'model_checkpoints')
 
@@ -164,13 +162,22 @@ if __name__ == '__main__':
 
     # new_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
 
+    early_stop = keras.callbacks.EarlyStopping(
+        monitor='val_loss',
+        min_delta=0.1,
+        patience=10,
+        mode='auto',
+        start_from_epoch=30,
+        restore_best_weights=True,
+    )
+
     conv_net.fit(
         training_set, 
-        steps_per_epoch=1000, 
-        epochs=60,
+        steps_per_epoch=87, 
+        epochs=100,
         validation_data=validation_set,
-        validation_steps=450, 
-        callbacks=[model_checkpoint]
+        validation_steps=20, 
+        callbacks=[model_checkpoint, early_stop]
     )
 
 
