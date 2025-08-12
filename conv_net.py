@@ -11,6 +11,8 @@ from keras import regularizers, optimizers
 from keras.callbacks import ModelCheckpoint
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
+from keras.losses import CategoricalCrossentropy
+from keras.optimizers import SGD
 from keras.layers import Conv2D, Flatten, MaxPooling2D, BatchNormalization, Dense, Dropout, Activation
 
 
@@ -51,8 +53,20 @@ def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
 def create_conv_net():
     conv_net = Sequential()
 
-    conv_net.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3)))
+    conv_net.add(Conv2D(32, (3, 3), input_shape=(320, 320, 3)))
 
+    conv_net.add(layers.LeakyReLU(alpha=0.01))
+
+    conv_net.add(MaxPooling2D(pool_size=(2, 2)))
+
+    conv_net.add(Conv2D(32, (3, 3)))
+    
+    conv_net.add(layers.LeakyReLU(alpha=0.01))
+
+    conv_net.add(MaxPooling2D(pool_size=(2, 2)))
+
+    conv_net.add(Conv2D(32, (3, 3)))
+    
     conv_net.add(layers.LeakyReLU(alpha=0.01))
 
     conv_net.add(MaxPooling2D(pool_size=(2, 2)))
@@ -70,10 +84,8 @@ def create_conv_net():
     conv_net.add(Dense(units=7, activation='softmax'))
 
     conv_net.compile(
-        # optimizer='adam', 
-        # optimizer=optimizer, 
-        optimizer="SGD", 
-        loss='binary_crossentropy', 
+        optimizer=SGD(momentum=0.99), 
+        loss=CategoricalCrossentropy(), 
         metrics=['accuracy']
         )
 
@@ -106,7 +118,7 @@ def create_sets():
         batch_size=32,
         shuffle=True,
         class_mode='categorical',
-        target_size=(64, 64)
+        target_size=(320, 320)
     )
 
     validation_set = data_gen.flow_from_dataframe(
@@ -114,7 +126,7 @@ def create_sets():
         dataframe=dataframe,
         x_col='Frame name',
         y_col='Label',
-        target_size=(64, 64),
+        target_size=(320, 320),
         batch_size=32,
         class_mode='categorical',
         shuffle=True,
@@ -127,7 +139,7 @@ def create_sets():
 def prediction(conv_net, image_name):
     test_image = image.load_img(
         os.path.join('datasets\\cnn\\test', 
-                     image_name), target_size=(64, 64))
+                     image_name), target_size=(320, 320))
     
     test_image = image.img_to_array(test_image)
 
