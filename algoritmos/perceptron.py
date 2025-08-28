@@ -1,4 +1,4 @@
-import os
+import os, time
 import pandas as pd
 import numpy as np
 
@@ -48,7 +48,11 @@ class Perceptron:
             
             epoch += 1
 
+
+
             print(f'Training Precision in epoch {epoch}: {(error/30)*100:.2f}%')
+
+            time.sleep(1)
 
             if erro is True:
                 erro = False
