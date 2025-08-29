@@ -1,0 +1,121 @@
+import keras
+from util import *
+from keras import layers
+from keras.models import Sequential
+from keras.losses import CategoricalCrossentropy
+from keras.optimizers import SGD
+from keras.layers import Conv2D, Flatten, MaxPooling2D, BatchNormalization, Dense, Dropout, Activation
+
+
+def create_load_net(file_dir=None):
+    conv_net = None
+    
+    if not file_dir:
+        conv_net = Sequential()
+
+        # ConvLayer2D = 7x7 conv, 64, /2
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            resource_map_size=64,
+            kernel_size=(7, 7),
+            strides=(2, 2),
+            input_shape=(320, 320, 3),
+            )
+
+        conv_net.add(MaxPooling2D(pool_size=(2, 2)))
+
+        # ConvLayer2D = 3x3 conv, 64
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            resource_map_size=64,
+            n_layer=6,
+            )
+
+        # ConvLayer2D = 3x3 conv, 128, /2
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            resource_map_size=128,
+            strides=(2, 2),
+            )
+        
+        # ConvLayer2D = 3x3 conv, 128
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            resource_map_size=128,
+            n_layer=7,
+            )
+        
+        # ConvLayer2D = 3x3 conv, 256, /2
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            strides=(2, 2)
+            )
+        
+        # ConvLayer2D = 3x3 conv, 256
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            n_layer=11,
+            )
+        
+        # ConvLayer2D = 3x3 conv, 512, /2
+        conv_net = create_conv_layer2D(
+            conv_net,
+            resource_map_size=512, 
+            strides=(2, 2)
+            )
+        
+        # ConvLayer2D = 3x3 conv, 512
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            resource_map_size=512, 
+            n_layer=4,
+            )
+        
+        conv_net.add(layers.GlobalAveragePooling2D())
+        
+        conv_net.add(Dense(units=1000, activation=layers.LeakyReLU(alpha=0.01)))
+
+        conv_net.add(Dense(units=7, activation='softmax'))
+
+        conv_net.compile(
+            optimizer=SGD(momentum=0.99), 
+            loss=CategoricalCrossentropy(), 
+            metrics=['accuracy']
+            )
+        
+    else:
+        checkpoint_dir = os.path.join(file_dir, 'model_checkpoints')
+
+        best_model_path = os.path.join(checkpoint_dir, 'conv_net_accuracy_0.69.keras')
+
+        conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
+    
+    return conv_net
+
+
+def create_conv_layer2D(conv_net, kernel_size=(3, 3), resource_map_size=256, strides=(1, 1), input_shape=None, n_layer=1, activation_layer=layers.LeakyReLU(alpha=0.01)):
+    
+    for _ in range(n_layer):
+
+        if not input_shape:
+            conv_net.add(Conv2D(
+                resource_map_size, 
+                kernel_size=kernel_size, 
+                input_shape=(320, 320, 3), 
+                strides=strides
+                ))
+
+        else:
+            conv_net.add(Conv2D(
+                resource_map_size, 
+                input_shape=(320, 320, 3), 
+                strides=strides
+            ))
+
+        conv_net.add(BatchNormalization())
+        
+        conv_net.add(activation_layer)
+        
+    return conv_net
+
+
