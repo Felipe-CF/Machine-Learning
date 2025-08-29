@@ -16,7 +16,6 @@ def create_load_net(file_dir=None):
         # ConvLayer2D = 7x7 conv, 64, /2
         conv_net = create_conv_layer2D(
             conv_net, 
-            resource_map_size=64,
             kernel_size=(7, 7),
             input_shape=(320, 320, 3),
             )
@@ -24,14 +23,12 @@ def create_load_net(file_dir=None):
         # ConvLayer2D = 3x3 conv, 64
         conv_net = create_conv_layer2D(
             conv_net, 
-            resource_map_size=64,
             n_layer=3,
             )
 
         # ConvLayer2D = 3x3 conv, 128, /2
         conv_net = create_conv_layer2D(
             conv_net, 
-            resource_map_size=128,
             strides=(2, 2),
             )
         
@@ -39,7 +36,6 @@ def create_load_net(file_dir=None):
         # ConvLayer2D = 3x3 conv, 128
         conv_net = create_conv_layer2D(
             conv_net, 
-            resource_map_size=128,
             n_layer=3,
             )
         
@@ -58,7 +54,6 @@ def create_load_net(file_dir=None):
         # ConvLayer2D = 3x3 conv, 512, /2
         conv_net = create_conv_layer2D(
             conv_net,
-            resource_map_size=512, 
             strides=(2, 2)
             )
         
@@ -69,7 +64,6 @@ def create_load_net(file_dir=None):
         # ConvLayer2D = 3x3 conv, 512
         conv_net = create_conv_layer2D(
             conv_net, 
-            resource_map_size=512, 
             n_layer=3,
             )
         
@@ -95,7 +89,7 @@ def create_load_net(file_dir=None):
     return conv_net
 
 
-def create_conv_layer2D(conv_net, kernel_size=(3, 3), resource_map_size=256, strides=(1, 1), input_shape=None, n_layer=1, activation_layer=layers.LeakyReLU(alpha=0.01)):
+def create_conv_layer2D(conv_net, kernel_size=(3, 3), resource_map_size=32, strides=(1, 1), input_shape=None, n_layer=1, activation_layer=layers.LeakyReLU(alpha=0.01)):
     
     for _ in range(n_layer):
 
