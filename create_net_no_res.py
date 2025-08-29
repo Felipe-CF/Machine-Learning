@@ -18,12 +18,9 @@ def create_load_net(file_dir=None):
             conv_net, 
             resource_map_size=64,
             kernel_size=(7, 7),
-            strides=(2, 2),
             input_shape=(320, 320, 3),
             )
-
-        conv_net.add(MaxPooling2D(pool_size=(2, 2)))
-
+        
         # ConvLayer2D = 3x3 conv, 64
         conv_net = create_conv_layer2D(
             conv_net, 
@@ -37,6 +34,7 @@ def create_load_net(file_dir=None):
             resource_map_size=128,
             strides=(2, 2),
             )
+        
         
         # ConvLayer2D = 3x3 conv, 128
         conv_net = create_conv_layer2D(
@@ -63,6 +61,10 @@ def create_load_net(file_dir=None):
             resource_map_size=512, 
             strides=(2, 2)
             )
+        
+        # 10x10
+        print(conv_net.summary())
+
         
         # ConvLayer2D = 3x3 conv, 512
         conv_net = create_conv_layer2D(
@@ -101,13 +103,13 @@ def create_conv_layer2D(conv_net, kernel_size=(3, 3), resource_map_size=256, str
             conv_net.add(Conv2D(
                 resource_map_size, 
                 kernel_size=kernel_size, 
-                input_shape=(320, 320, 3), 
                 strides=strides
                 ))
 
         else:
             conv_net.add(Conv2D(
-                resource_map_size, 
+                resource_map_size,
+                kernel_size=kernel_size, 
                 input_shape=(320, 320, 3), 
                 strides=strides
             ))

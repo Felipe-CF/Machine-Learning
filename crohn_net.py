@@ -1,8 +1,17 @@
 import keras
 from util import *
-from create_net_no_res import *
+from keras import layers
 import numpy as np, random
 import matplotlib.pyplot as plt
+from keras.models import Model
+from keras.preprocessing import image
+from keras import regularizers, optimizers
+from keras.callbacks import ModelCheckpoint
+from PIL import Image, UnidentifiedImageError
+from keras.losses import CategoricalCrossentropy
+from keras.optimizers import SGD
+from keras.layers import Conv2D, Flatten, MaxPooling2D, BatchNormalization, Dense, Dropout, Activation
+from util import *
 from keras.callbacks import ModelCheckpoint
 
 
@@ -42,8 +51,3 @@ if __name__ == '__main__':
         validation_steps=20, 
         callbacks=[model_checkpoint, early_stop]
     )
-
-
-
-
-
