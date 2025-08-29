@@ -11,68 +11,7 @@ def create_load_net(file_dir=None):
     conv_net = None
     
     if not file_dir:
-        conv_net = Sequential()
-
-        # ConvLayer2D = 7x7 conv, 64, /2
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            resource_map_size=64,
-            kernel_size=(7, 7),
-            input_shape=(320, 320, 3),
-            )
-        
-        # ConvLayer2D = 3x3 conv, 64
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            resource_map_size=64,
-            n_layer=3,
-            )
-
-        # ConvLayer2D = 3x3 conv, 128, /2
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            resource_map_size=128,
-            strides=(2, 2),
-            )
-        
-        
-        # ConvLayer2D = 3x3 conv, 128
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            resource_map_size=128,
-            n_layer=3,
-            )
-        
-        # ConvLayer2D = 3x3 conv, 256, /2
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            strides=(2, 2)
-            )
-        
-        # ConvLayer2D = 3x3 conv, 256
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            n_layer=3,
-            )
-        
-        # ConvLayer2D = 3x3 conv, 512, /2
-        conv_net = create_conv_layer2D(
-            conv_net,
-            resource_map_size=512, 
-            strides=(2, 2)
-            )
-        
-        # 10x10
-        print(conv_net.summary())
-
-        
-        # ConvLayer2D = 3x3 conv, 512
-        conv_net = create_conv_layer2D(
-            conv_net, 
-            resource_map_size=512, 
-            n_layer=3,
-            )
-        
+       
         conv_net.add(layers.GlobalAveragePooling2D())
         
         conv_net.add(Dense(units=1000, activation=layers.LeakyReLU(alpha=0.01)))
