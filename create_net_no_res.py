@@ -22,11 +22,6 @@ def create_load_net(file_dir=None):
             input_shape=(320, 320, 3),
             )
         
-        # ConvLayer2D = 3x3 conv, 64
-        # conv_net = create_conv_layer2D(
-        #     conv_net, 
-        #     resource_map_size=32
-        #     )
 
         # ConvLayer2D = 3x3 conv, 128, /2
         conv_net = create_conv_layer2D(
@@ -35,12 +30,11 @@ def create_load_net(file_dir=None):
             resource_map_size=64, 
             )
         
-        
-        # ConvLayer2D = 3x3 conv, 128
-        # conv_net = create_conv_layer2D(
-        #     conv_net, 
-        #     resource_map_size=64, 
-        #     )
+        conv_net = create_conv_layer2D(
+            conv_net, 
+            n_layer=2,
+            resource_map_size=64, 
+            )
         
         # ConvLayer2D = 3x3 conv, 256, /2
         conv_net = create_conv_layer2D(
@@ -49,12 +43,6 @@ def create_load_net(file_dir=None):
             strides=(2, 2)
             )
         
-        # ConvLayer2D = 3x3 conv, 256
-        # conv_net = create_conv_layer2D(
-        #     conv_net, 
-        #     n_layer=2,
-        #     )
-        
         # ConvLayer2D = 3x3 conv, 512, /2
         conv_net = create_conv_layer2D(
             conv_net,
@@ -62,23 +50,7 @@ def create_load_net(file_dir=None):
             strides=(2, 2)
             )
         
-        # ConvLayer2D = 3x3 conv, 512
-        # conv_net = create_conv_layer2D(
-        #     conv_net, 
-        #     n_layer=2,
-        #     )
-        
         conv_net.add(layers.GlobalAveragePooling2D())
-
-        conv_net.add(Flatten())
-        
-        # conv_net.add(
-        #     Dense(
-        #         units=1000, 
-        #         activation=layers.LeakyReLU(alpha=0.01), 
-        #         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0)
-        #         )
-        #     )
 
         conv_net.add(
             Dense(
@@ -97,7 +69,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'model_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohnv_net_val_auc_0.8900.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohnv_net_val_auc_0.9056.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
