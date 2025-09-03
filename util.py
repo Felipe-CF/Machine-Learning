@@ -160,6 +160,6 @@ def save_history(file_dir, history):
     history_path = history_path + '\\last_fit_history.json'
 
     with open(history_path, 'w') as file:
-        json.dumps(history.history, file)
+        json.dumps(history, file)
 
     print('Last history of training saved sucessfull!')

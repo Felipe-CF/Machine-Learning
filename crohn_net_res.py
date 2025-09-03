@@ -10,7 +10,7 @@ from keras.callbacks import ModelCheckpoint
 if __name__ == '__main__':
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    res_net = create_load_net()
+    res_net = create_load_net(file_dir)
 
     res_net.compile(
         optimizer=SGD(momentum=0.99), 
@@ -35,4 +35,4 @@ if __name__ == '__main__':
 
     save_history(history, file_dir)
 
-    
+
