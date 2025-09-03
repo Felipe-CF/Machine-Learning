@@ -34,7 +34,10 @@ def create_load_net(file_dir=None):
        
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
 
-        outputs = Dense(units=7, activation='softmax')(res_net_layers)
+        outputs = Dense(
+            units=7, 
+            activation='softmax',
+            kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
         
         return Model(inputs, outputs)
         
