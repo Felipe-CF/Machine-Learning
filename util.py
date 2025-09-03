@@ -136,7 +136,7 @@ def early_stopping():
         min_delta=0.01,
         patience=10,
         mode='max',
-        start_from_epoch=30,
+        start_from_epoch=50,
         restore_best_weights=True,
     )
 
@@ -144,7 +144,7 @@ def early_stopping():
 def model_checkpoint(checkpoint_dir):
 
     return ModelCheckpoint(
-        filepath=os.path.join(checkpoint_dir, 'crohnv_net_val_auc_{val_auc:.4f}.keras'),
+        filepath=os.path.join(checkpoint_dir, 'crohn_net_{val_auc:.4f}.keras'),
         mode='max', # detecta automaticamente
         save_best_only=True, # salvar quando a métrica melhora
         save_weights_only=False, # somente os pesos
