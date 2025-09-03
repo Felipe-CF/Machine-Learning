@@ -1,6 +1,5 @@
-import os
+import os, keras, json
 import pandas as pd
-import keras
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint
@@ -151,3 +150,16 @@ def model_checkpoint(checkpoint_dir):
         monitor='val_auc', # métrica balizadora do armazenamento (precisão da validação)
         verbose=1 # logs de salvamento
     )
+
+
+def save_history(file_dir, history):
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+
+    history_path = os.path.join(file_dir, 'resnet_fit_history')
+
+    history_path = history_path + '\\last_fit_history.json'
+
+    with open(history_path, 'w') as file:
+        json.dumps(history.history, file)
+
+    print('Last history of training saved sucessfull!')

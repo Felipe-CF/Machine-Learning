@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     print(res_net.summary())
 
-    res_net.fit(
+    history = res_net.fit(
         training_set, 
         steps_per_epoch=174, 
         epochs=100,
@@ -32,3 +32,7 @@ if __name__ == '__main__':
         validation_steps=43, 
         callbacks=[model_checkpoint(checkpoint_dir), early_stopping()]
     )
+
+    save_history(history, file_dir)
+
+    

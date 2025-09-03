@@ -44,7 +44,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'resnet_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.69.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.9111.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
