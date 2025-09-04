@@ -1,12 +1,10 @@
 import keras
 from util import *
-from keras import layers
+from keras.regularizers import L2
 from keras.layers import BatchNormalization, LeakyReLU, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
-from keras.losses import CategoricalCrossentropy
-from keras.optimizers import SGD
 from keras.initializers import TruncatedNormal
-from keras.layers import Conv2D, Flatten, MaxPooling2D, BatchNormalization, Dense, Dropout, Activation
+from keras.layers import Conv2D, BatchNormalization, Dense, Dropout
 
 
 def create_load_net(file_dir=None):
@@ -16,7 +14,14 @@ def create_load_net(file_dir=None):
 
         inputs = keras.Input(shape=(320, 320, 3))
 
-        res_net_layers =  Conv2D(kernel_size=(7, 7), strides=2, filters=32, padding='same')(inputs)
+        res_net_layers =  Conv2D(
+            kernel_size=(7, 7), 
+            strides=2, 
+            filters=32, 
+            padding='same',
+            kernel_regularizer=L2(),
+            kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0)
+            )(inputs)
 
         res_net_layers = BatchNormalization()(res_net_layers)
 
@@ -37,6 +42,7 @@ def create_load_net(file_dir=None):
         outputs = Dense(
             units=7, 
             activation='softmax',
+            kernel_regularizer=L2(),
             kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
         
         return Model(inputs, outputs)
@@ -59,6 +65,7 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
+        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -70,6 +77,7 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
+        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -93,6 +101,7 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
         kernel_size=kernel_size, 
         padding="same", 
         strides=2,
+        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -103,7 +112,8 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
     res_net_layers = Conv2D( 
         filters=filters, 
         kernel_size=kernel_size, 
-        padding="same", 
+        padding="same",
+        kernel_regularizer=L2(), 
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -114,6 +124,7 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
         kernel_size=(1, 1),
         strides=2, 
         padding='same',
+        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(skip_connection)
 
     projection_connection = BatchNormalization()(projection_connection)

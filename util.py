@@ -1,10 +1,11 @@
 import os, keras, json
 import pandas as pd
+import matplotlib as plt
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
 from keras.callbacks import ModelCheckpoint
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import KFold, StratifiedKFold
 
 
@@ -49,7 +50,7 @@ def create_sets():
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
-        validation_split=0.2, # separação do subset de validação
+        validation_split=0.2, # separação do subset de Validation
     )
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -147,7 +148,7 @@ def model_checkpoint(checkpoint_dir):
         mode='max', # detecta automaticamente
         save_best_only=True, # salvar quando a métrica melhora
         save_weights_only=False, # somente os pesos
-        monitor='val_auc', # métrica balizadora do armazenamento (precisão da validação)
+        monitor='val_auc', # métrica balizadora do armazenamento (Accuracy da Validation)
         verbose=1 # logs de salvamento
     )
 
@@ -157,9 +158,60 @@ def save_history(file_dir, history):
 
     history_path = os.path.join(file_dir, 'resnet_fit_history')
 
-    history_path = history_path + '\\last_fit_history.json'
+    result = max(history.history['auc'])
+
+    history_path = history_path + f'\\fit_history_{result:.4f}.json'
 
     with open(history_path, 'w') as file:
-        json.dumps(history, file)
+        file.write(json.dumps(history.history))
 
     print('Last history of training saved sucessfull!')
+
+
+def generate_grafics(history):
+    auc = history['auc']
+
+    val_auc = history['val_auc']
+
+    loss = history['binary_crossentropy']
+
+    val_loss = history['val_binary_crossentropy']
+
+    binary_crossentropy = history['binary_crossentropy']
+
+    val_binary_crossentropy = history['val_binary_crossentropy']
+
+    epochs = history['epoch']
+
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    fig.suptitle(f'Training History - CrohnNet', fontsize=16)
+    
+    # Gráfico de AUC (o equivalente a acurácia no seu log)
+    axes[0].plot(epochs, auc, label='Traning AUC', color='blue')
+    axes[0].plot(epochs, val_auc, label='Validation AUC', color='red', linestyle='--')
+    axes[0].set_title('Accuracy - AUC vs. Epochs')
+    axes[0].set_xlabel('Epochs')
+    axes[0].set_ylabel('AUC')
+    axes[0].legend()
+    axes[0].grid(True)
+    
+    # Gráfico de Binary Cross-Entropy
+    axes[1].plot(epochs, binary_crossentropy, label='Traning BCE', color='blue')
+    axes[1].plot(epochs, val_binary_crossentropy, label='Validation BCE', color='red', linestyle='--')
+    axes[1].set_title('Binary Cross-Entropy vs. Epochs')
+    axes[1].set_xlabel('Epochs')
+    axes[1].set_ylabel('Binary Cross-Entropy')
+    axes[1].legend()
+    axes[1].grid(True)
+
+    # Gráfico de Loss
+    axes[2].plot(epochs, loss, label='Traning Loss', color='blue')
+    axes[2].plot(epochs, val_loss, label='Validation Loss', color='red', linestyle='--')
+    axes[2].set_title('Loss Fuction vs. Epochs')
+    axes[2].set_xlabel('Epochs')
+    axes[2].set_ylabel('Loss')
+    axes[2].legend()
+    axes[2].grid(True)
+    
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    plt.show()
