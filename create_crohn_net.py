@@ -40,7 +40,7 @@ def create_load_net(file_dir=None):
 
         outputs = Dense(
             units=7, 
-            activation='softmax',
+            activation='sigmoid',
             kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
         
         return Model(inputs, outputs)

@@ -51,7 +51,7 @@ def create_sets():
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
-        validation_split=0.2, # separação do subset de Validation
+        validation_split=0.3, # separação do subset de Validation
     )
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -137,7 +137,7 @@ def early_stopping():
         min_delta=0.01,
         patience=10,
         mode='max',
-        start_from_epoch=70,
+        start_from_epoch=50,
         restore_best_weights=True,
     )
 
@@ -225,8 +225,8 @@ def learning_rate_plateau():
     return ReduceLROnPlateau(
         monitor='val_auc',
         mode='max',
-        factor=0.1, 
-        patience=10,
+        factor=0.5, 
+        patience=20,
         min_delta=0.01,
         cooldown=10,
         verbose=1
