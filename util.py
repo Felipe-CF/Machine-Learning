@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib as plt
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
+from keras.callbacks import ReduceLROnPlateau
 from keras.callbacks import ModelCheckpoint
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -136,7 +137,7 @@ def early_stopping():
         min_delta=0.01,
         patience=10,
         mode='max',
-        start_from_epoch=50,
+        start_from_epoch=70,
         restore_best_weights=True,
     )
 
@@ -158,9 +159,11 @@ def save_history(file_dir, history):
 
     history_path = os.path.join(file_dir, 'resnet_fit_history')
 
-    result = max(history.history['auc'])
+    auc = max(history.history['auc'])
 
-    history_path = history_path + f'\\fit_history_{result:.4f}.json'
+    val_auc = max(history.history['val_auc'])
+
+    history_path = history_path + f'\\fit_history_auc_{auc:.4f}_val_auc_{val_auc:.4f}.json'
 
     with open(history_path, 'w') as file:
         file.write(json.dumps(history.history))
@@ -215,3 +218,16 @@ def generate_grafics(history):
     
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
+
+
+def learning_rate_plateau():
+
+    return ReduceLROnPlateau(
+        monitor='val_auc',
+        mode='max',
+        factor=0.1, 
+        patience=10,
+        min_delta=0.01,
+        cooldown=10,
+        verbose=1
+    )

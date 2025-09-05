@@ -17,9 +17,8 @@ def create_load_net(file_dir=None):
         res_net_layers =  Conv2D(
             kernel_size=(7, 7), 
             strides=2, 
-            filters=32, 
+            filters=64, 
             padding='same',
-            kernel_regularizer=L2(),
             kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0)
             )(inputs)
 
@@ -27,7 +26,7 @@ def create_load_net(file_dir=None):
 
         res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=32)
+        res_net_layers = add_identity_block(res_net_layers, filters=64)
 
         res_net_layers = add_projection_block(res_net_layers, filters=64)
 
@@ -42,7 +41,6 @@ def create_load_net(file_dir=None):
         outputs = Dense(
             units=7, 
             activation='softmax',
-            kernel_regularizer=L2(),
             kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
         
         return Model(inputs, outputs)
@@ -50,7 +48,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'resnet_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.9111.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.9130.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
@@ -65,7 +63,6 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -77,7 +74,6 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -88,6 +84,8 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
     res_net_layers = add([res_net_layers, skip_connection])
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+
+    res_net_layers = Dropout(0.2)(res_net_layers)
 
     return res_net_layers
 
@@ -101,7 +99,6 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
         kernel_size=kernel_size, 
         padding="same", 
         strides=2,
-        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -113,7 +110,6 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_regularizer=L2(), 
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
@@ -124,7 +120,6 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
         kernel_size=(1, 1),
         strides=2, 
         padding='same',
-        kernel_regularizer=L2(),
         kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(skip_connection)
 
     projection_connection = BatchNormalization()(projection_connection)
@@ -133,5 +128,7 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
     res_net_layers = add([res_net_layers, projection_connection])
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+
+    res_net_layers = Dropout(0.2)(res_net_layers)
 
     return res_net_layers
