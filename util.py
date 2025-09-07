@@ -51,7 +51,7 @@ def create_sets():
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
-        validation_split=0.3, # separação do subset de Validation
+        validation_split=0.2, # separação do subset de Validation
     )
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -130,38 +130,18 @@ def dataframe_preprocessing(file_dir):
     dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_processed.csv')
 
 
-def early_stopping():
-
-    return keras.callbacks.EarlyStopping(
-        monitor='val_auc',
-        min_delta=0.01,
-        patience=10,
-        mode='max',
-        start_from_epoch=50,
-        restore_best_weights=True,
-    )
-
-
-def model_checkpoint(checkpoint_dir):
-
-    return ModelCheckpoint(
-        filepath=os.path.join(checkpoint_dir, 'crohn_net_{val_auc:.4f}.keras'),
-        mode='max', # detecta automaticamente
-        save_best_only=True, # salvar quando a métrica melhora
-        save_weights_only=False, # somente os pesos
-        monitor='val_auc', # métrica balizadora do armazenamento (Accuracy da Validation)
-        verbose=1 # logs de salvamento
-    )
-
-
 def save_history(file_dir, history):
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
     history_path = os.path.join(file_dir, 'resnet_fit_history')
 
-    auc = max(history.history['auc'])
+    val_auc = history.history['val_auc']
 
-    val_auc = max(history.history['val_auc'])
+    auc = val_auc.index(max(val_auc))
+
+    auc = history.history['auc'][auc]
+
+    val_auc = max(val_auc)
 
     history_path = history_path + f'\\fit_history_auc_{auc:.4f}_val_auc_{val_auc:.4f}.json'
 
@@ -220,14 +200,5 @@ def generate_grafics(history):
     plt.show()
 
 
-def learning_rate_plateau():
 
-    return ReduceLROnPlateau(
-        monitor='val_auc',
-        mode='max',
-        factor=0.5, 
-        patience=20,
-        min_delta=0.01,
-        cooldown=10,
-        verbose=1
-    )
+

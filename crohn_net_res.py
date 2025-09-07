@@ -1,5 +1,6 @@
 import keras
 from util import *
+from hyperparameters import *
 import numpy as np, random
 from create_crohn_net import *
 import matplotlib.pyplot as plt
@@ -13,7 +14,7 @@ if __name__ == '__main__':
     # res_net = create_load_net(file_dir)
 
     res_net.compile(
-        optimizer=SGD(momentum=0.99), 
+        optimizer=SGD(learning_rate=0.025, momentum=0.99), 
         loss=keras.losses.BinaryCrossentropy(), 
         metrics=[keras.metrics.BinaryCrossentropy(), keras.metrics.AUC(name='auc')]
     )
@@ -22,7 +23,7 @@ if __name__ == '__main__':
 
     checkpoint_dir = os.path.join(file_dir, 'resnet_checkpoints')
 
-    print(res_net.summary())
+    # print(res_net.summary())
 
     res_net.fit(
         training_set, 
