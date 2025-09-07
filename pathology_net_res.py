@@ -1,8 +1,7 @@
 import keras
-from util import *
 from hyperparameters import *
 import numpy as np, random
-from create_crohn_net import *
+from create_pathology_net import *
 import matplotlib.pyplot as plt
 from keras.optimizers import SGD
 
@@ -21,9 +20,9 @@ if __name__ == '__main__':
 
     training_set, validation_set = create_sets()
 
-    checkpoint_dir = os.path.join(file_dir, 'crohnet_checkpoints')
+    checkpoint_dir = os.path.join(file_dir, 'pathology_checkpoints')
 
-    # print(res_net.summary())
+    print(res_net.summary())
 
     res_net.fit(
         training_set, 
