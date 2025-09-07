@@ -1,5 +1,6 @@
 import os
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
+from keras.metrics import AUC, F1Score, Recall, Precision, BinaryAccuracy
 
 
 def early_stopping():
@@ -32,11 +33,22 @@ def learning_rate_plateau():
         monitor='val_auc',
         mode='max',
         factor=0.5, 
-        patience=20,
+        patience=10,
         min_delta=0.001,
         cooldown=10,
         verbose=1
     )
+
+
+def metrics():
+
+    return [
+        AUC(name='AUC', curve='ROC', multi_label=True, num_labels=7),
+        Precision(name='Precision', thresholds=0.5),
+        Recall(name='Recall', thresholds=0.5),
+        BinaryAccuracy(name='Accuracy', threshold=0.5),
+        F1Score(name='F1 score')
+    ]
 
 
 

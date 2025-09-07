@@ -1,4 +1,4 @@
-import os, keras, json
+import os, json
 import pandas as pd
 import matplotlib as plt
 from PIL import Image, UnidentifiedImageError
@@ -44,7 +44,7 @@ def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
                     os.remove(file_path)
 
 
-def create_sets():
+def create_sets(processing=None):
     data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
         rescale=1./255, 
         # augmentation
@@ -56,17 +56,20 @@ def create_sets():
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
+    if processing is None:
+        dataframe_preprocessing()
+
     dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
 
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description.csv')
+    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_pathology_processed.csv')
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
     training_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col='Label',
-        x_col='Frame name',
+        y_col=['0', '1'],
+        x_col='2',
         subset='training',
         batch_size=16,
         shuffle=True,
@@ -77,8 +80,8 @@ def create_sets():
     validation_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col='Label',
-        x_col='Frame name',
+        y_col=['0', '1'],
+        x_col='2',
         target_size=(320, 320),
         batch_size=16,
         class_mode='raw',
@@ -89,11 +92,7 @@ def create_sets():
     return training_set, validation_set
 
 
-def kfolds_subsets():
-    pass
-
-
-def dataframe_preprocessing(file_dir):
+def dataframe_preprocessing():
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
     dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI'
@@ -104,14 +103,13 @@ def dataframe_preprocessing(file_dir):
 
     dataframe['Label'].replace(
         {
-            "N": 0,
             "U>10" : 'P',
             "U3-10" : 'P',
             "E" : 'P', 
             "AU" : 'P', 
             "O" : 'P',
             "S" : 'P' 
-        }
+        }, inplace=True
     )
 
     dataframe = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(dataframe)
@@ -124,7 +122,7 @@ def dataframe_preprocessing(file_dir):
 def save_history(file_dir, history):
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    history_path = os.path.join(file_dir, 'resnet_fit_history')
+    history_path = os.path.join(file_dir, 'pathology_fit_history')
 
     val_auc = history.history['val_auc']
 

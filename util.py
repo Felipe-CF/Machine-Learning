@@ -1,13 +1,10 @@
-import os, keras, json
+import os, json
 import pandas as pd
 import matplotlib as plt
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
-from keras.callbacks import ReduceLROnPlateau
-from keras.callbacks import ModelCheckpoint
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.model_selection import KFold, StratifiedKFold
 
 
 def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):

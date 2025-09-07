@@ -3,7 +3,6 @@ from util import *
 from hyperparameters import *
 import numpy as np, random
 from create_crohn_net import *
-import matplotlib.pyplot as plt
 from keras.optimizers import SGD
 
 
@@ -16,7 +15,7 @@ if __name__ == '__main__':
     res_net.compile(
         optimizer=SGD(learning_rate=0.025, momentum=0.99), 
         loss=keras.losses.BinaryCrossentropy(), 
-        metrics=[keras.metrics.BinaryCrossentropy(), keras.metrics.AUC(name='auc')]
+        metrics=metrics()
     )
 
     training_set, validation_set = create_sets()

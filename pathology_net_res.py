@@ -18,7 +18,7 @@ if __name__ == '__main__':
         metrics=[keras.metrics.BinaryCrossentropy(), keras.metrics.AUC(name='auc')]
     )
 
-    training_set, validation_set = create_sets()
+    training_set, validation_set = create_sets(True)
 
     checkpoint_dir = os.path.join(file_dir, 'pathology_checkpoints')
 

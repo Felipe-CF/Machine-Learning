@@ -1,6 +1,6 @@
 import keras
 from util import *
-from keras.regularizers import L2
+from keras.regularizers import L2, L1, L1L2
 from keras.layers import BatchNormalization, LeakyReLU, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
 from keras.initializers import TruncatedNormal
@@ -85,7 +85,7 @@ def add_identity_block(res_net_layers, filters=32, kernel_size=(3, 3)):
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
 
-    res_net_layers = Dropout(0.2)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
 
@@ -129,6 +129,6 @@ def add_projection_block(res_net_layers, filters=32,kernel_size=(3, 3)):
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
 
-    res_net_layers = Dropout(0.2)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
