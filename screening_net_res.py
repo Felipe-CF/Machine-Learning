@@ -23,8 +23,6 @@ if __name__ == '__main__':
 
     checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-    print(screening_net.summary())
-
     screening_net.fit(
         training_set, 
         steps_per_epoch=174, 
