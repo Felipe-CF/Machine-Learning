@@ -4,6 +4,7 @@ import numpy as np, random
 from create_screening_net import *
 import matplotlib.pyplot as plt
 from keras.optimizers import SGD
+from keras.losses import BinaryCrossentropy
 
 
 if __name__ == '__main__':
@@ -14,7 +15,7 @@ if __name__ == '__main__':
 
     screening_net.compile(
         optimizer=SGD(learning_rate=0.0025, momentum=0.99, name='SGD'), 
-        loss=keras.losses.BinaryCrossentropy(), 
+        loss=BinaryCrossentropy(), 
         metrics=screening_metrics()
     )
 

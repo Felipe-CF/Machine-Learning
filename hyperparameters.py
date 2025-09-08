@@ -43,7 +43,7 @@ def learning_rate_plateau():
 def screening_metrics():
 
     return [
-        AUC(name='AUC', curve='ROC', num_labels=2),
+        AUC(name='AUC', curve='ROC'),
         Precision(name='Precision', thresholds=0.5),
         Recall(name='Recall', thresholds=0.5),
         BinaryAccuracy(name='Accuracy', threshold=0.5),
