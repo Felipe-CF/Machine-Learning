@@ -1,9 +1,8 @@
 import keras
-from util import *
+from util_classification_net import *
 from hyperparameters import *
-import numpy as np, random
-from create_crohn_net import *
-from keras.optimizers import SGD, Adam
+from create_classification_net import *
+from keras.optimizers import SGD
 
 
 if __name__ == '__main__':
@@ -13,16 +12,16 @@ if __name__ == '__main__':
     # res_net = create_load_net(file_dir)
 
     res_net.compile(
-        optimizer=SGD(learning_rate=0.025, momentum=0.99, name='SGD'), 
+        optimizer=SGD(learning_rate=0.0025, momentum=0.99, name='SGD'), 
         loss=keras.losses.BinaryCrossentropy(), 
-        metrics=metrics()
+        metrics=classification_metrics()
     )
 
     training_set, validation_set = create_sets()
 
-    checkpoint_dir = os.path.join(file_dir, 'crohnet_checkpoints')
+    checkpoint_dir = os.path.join(file_dir, 'classification_checkpoints')
 
-    # print(res_net.summary())
+    print(res_net.summary())
 
     res_net.fit(
         training_set, 
@@ -30,7 +29,7 @@ if __name__ == '__main__':
         epochs=100,
         validation_data=validation_set,
         validation_steps=43,
-        class_weight=class_weights(), 
+        class_weight=classification_class_weights(), 
         callbacks=[model_checkpoint(checkpoint_dir), early_stopping(), learning_rate_plateau()]
     )
 

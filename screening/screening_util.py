@@ -3,8 +3,11 @@ import pandas as pd
 import matplotlib as plt
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
+from keras.callbacks import ReduceLROnPlateau
+from keras.callbacks import ModelCheckpoint
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import KFold, StratifiedKFold
 
 
 def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
@@ -41,7 +44,7 @@ def invalid_files(dir_path, valid_extensions={'.jpg', '.png', '.jpeg'}):
                     os.remove(file_path)
 
 
-def create_sets():
+def create_sets(processing=None):
     data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
         rescale=1./255, 
         # augmentation
@@ -53,17 +56,20 @@ def create_sets():
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
+    if processing is None:
+        dataframe_preprocessing()
+
     dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
 
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_processed.csv')
+    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
     training_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col=['0', '1', '2', '3', '4', '5', '6'],
-        x_col='7',
+        y_col=['0', '1'],
+        x_col='2',
         subset='training',
         batch_size=16,
         shuffle=True,
@@ -74,8 +80,8 @@ def create_sets():
     validation_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col=['0', '1', '2', '3', '4', '5', '6'],
-        x_col='7',
+        y_col=['0', '1'],
+        x_col='2',
         target_size=(320, 320),
         batch_size=16,
         class_mode='raw',
@@ -86,11 +92,7 @@ def create_sets():
     return training_set, validation_set
 
 
-def kfolds_subsets():
-    pass
-
-
-def dataframe_preprocessing(file_dir):
+def dataframe_preprocessing():
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
     dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI'
@@ -99,44 +101,34 @@ def dataframe_preprocessing(file_dir):
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
+    dataframe['Label'].replace(
+        {
+            "U>10" : 'P',
+            "U3-10" : 'P',
+            "E" : 'P', 
+            "AU" : 'P', 
+            "O" : 'P',
+            "S" : 'P' 
+        }, inplace=True
+    )
+
     dataframe = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(dataframe)
 
     dataframe = pd.DataFrame(dataframe)
 
-
-    '''
-    N ==> column=2
-    U>10 ==> column=6
-    U3-10 ==> column=5 
-    E ==> column=1 
-    AU ==> column=0 
-    O ==> column=3 
-    S ==> column=4 
-
-            0    1    2    3    4    5    6          7  8
-    0    0.0  0.0  1.0  0.0  0.0  0.0  0.0  00001.jpg  2
-    20   0.0  0.0  0.0  0.0  0.0  0.0  1.0  00021.jpg  4
-    36   0.0  0.0  0.0  0.0  0.0  1.0  0.0  00037.jpg  3
-    37   0.0  1.0  0.0  0.0  0.0  0.0  0.0  00038.jpg  2
-    40   1.0  0.0  0.0  0.0  0.0  0.0  0.0  00041.jpg  4
-    95   0.0  0.0  0.0  1.0  0.0  0.0  0.0  00098.jpg  5
-    158  0.0  0.0  0.0  0.0  1.0  0.0  0.0  00161.jpg  2
-
-    '''
-
-    dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_processed.csv')
+    dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_screening_processed.csv')
 
 
 def save_history(file_dir, history):
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    history_path = os.path.join(file_dir, 'resnet_fit_history')
+    history_path = os.path.join(file_dir, 'screening_fit_history')
 
-    val_auc = history.history['val_auc']
+    val_auc = history.history['val_AUC']
 
     auc = val_auc.index(max(val_auc))
 
-    auc = history.history['auc'][auc]
+    auc = history.history['AUC'][auc]
 
     val_auc = max(val_auc)
 
@@ -149,9 +141,9 @@ def save_history(file_dir, history):
 
 
 def generate_grafics(history):
-    auc = history['auc']
+    auc = history['AUC']
 
-    val_auc = history['val_auc']
+    val_auc = history['val_AUC']
 
     loss = history['binary_crossentropy']
 
@@ -195,7 +187,4 @@ def generate_grafics(history):
     
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
-
-
-
 

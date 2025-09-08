@@ -1,5 +1,5 @@
 import keras
-from util import *
+from util_classification_net import *
 from keras.regularizers import L2, L1, L1L2
 from keras.layers import BatchNormalization, LeakyReLU, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
@@ -39,14 +39,14 @@ def create_load_net(file_dir=None):
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
 
         outputs = Dense(
-            units=7, 
+            units=6, 
             activation='sigmoid',
             kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
         
         return Model(inputs, outputs)
         
     else:
-        checkpoint_dir = os.path.join(file_dir, 'crohnet_checkpoints')
+        checkpoint_dir = os.path.join(file_dir, 'classification_checkpoints')
 
         best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.9130.keras')
 

@@ -1,4 +1,4 @@
-from util import *
+from util_classification_net import *
 from create_net_no_res import *
 import numpy as np
 import matplotlib.pyplot as plt

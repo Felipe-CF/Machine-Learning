@@ -1,5 +1,5 @@
 import keras
-from util import *
+from util_classification_net import *
 from keras import layers
 from keras.models import Sequential
 from keras.optimizers import SGD
