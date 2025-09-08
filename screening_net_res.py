@@ -9,10 +9,10 @@ from keras.optimizers import SGD
 if __name__ == '__main__':
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    res_net = create_load_net()
-    # res_net = create_load_net(file_dir)
+    screening_net = create_load_net()
+    # screening_net = create_load_net(file_dir)
 
-    res_net.compile(
+    screening_net.compile(
         optimizer=SGD(learning_rate=0.0025, momentum=0.99, name='SGD'), 
         loss=keras.losses.BinaryCrossentropy(), 
         metrics=screening_metrics()
@@ -22,9 +22,9 @@ if __name__ == '__main__':
 
     checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-    print(res_net.summary())
+    print(screening_net.summary())
 
-    res_net.fit(
+    screening_net.fit(
         training_set, 
         steps_per_epoch=174, 
         epochs=100,
@@ -34,6 +34,6 @@ if __name__ == '__main__':
         callbacks=[model_checkpoint(checkpoint_dir), early_stopping(), learning_rate_plateau()]
     )
 
-    save_history(history=res_net.history, file_dir=file_dir)
+    save_history(history=screening_net.history, file_dir=file_dir)
 
 
