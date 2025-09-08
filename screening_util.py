@@ -61,7 +61,7 @@ def create_sets(processing=None):
 
     dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
 
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_pathology_processed.csv')
+    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
@@ -116,13 +116,13 @@ def dataframe_preprocessing():
 
     dataframe = pd.DataFrame(dataframe)
 
-    dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_pathology_processed.csv')
+    dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_screening_processed.csv')
 
 
 def save_history(file_dir, history):
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    history_path = os.path.join(file_dir, 'pathology_fit_history')
+    history_path = os.path.join(file_dir, 'screening_fit_history')
 
     val_auc = history.history['val_auc']
 
@@ -187,7 +187,4 @@ def generate_grafics(history):
     
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
-
-
-
 

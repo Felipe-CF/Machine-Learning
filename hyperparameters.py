@@ -51,7 +51,30 @@ def metrics():
     ]
 
 
-def class_weights():
+def screening_metrics():
+
+    return [
+        AUC(name='AUC', curve='ROC', multi_label=True, num_labels=2),
+        Precision(name='Precision', thresholds=0.5),
+        Recall(name='Recall', thresholds=0.5),
+        BinaryAccuracy(name='Accuracy', threshold=0.5),
+        F1Score(name='F1_score', threshold=0.5)
+    ]
+
+
+def screening_class_weights():
+
+    classes = {
+        "0": 0.8234,
+        "1": 1.2861,
+    }
+
+    classes_weight = {int(key): value for key, value in classes.items()}
+
+    return classes_weight
+
+
+def classification_class_weights():
 
     classes = {
         "0": 1.983,
