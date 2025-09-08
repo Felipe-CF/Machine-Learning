@@ -31,6 +31,7 @@ if __name__ == '__main__':
         epochs=100,
         validation_data=validation_set,
         validation_steps=43,
+        verbose=2,
         class_weight=screening_class_weights(), 
         callbacks=[model_checkpoint(checkpoint_dir), early_stopping(), learning_rate_plateau()]
     )
