@@ -26,12 +26,12 @@ if __name__ == '__main__':
     screening_net.fit(
         training_set, 
         steps_per_epoch=174, 
-        epochs=100,
+        epochs=20,
         validation_data=validation_set,
         validation_steps=43,
         verbose=1,
         class_weight=screening_class_weights(), 
-        callbacks=[model_checkpoint(checkpoint_dir), early_stopping(), learning_rate_plateau()]
+        callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau()]
     )
 
     save_history(history=screening_net.history, file_dir=file_dir)

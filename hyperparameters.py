@@ -10,7 +10,7 @@ def early_stopping():
         min_delta=0.001,
         patience=10,
         mode='max',
-        start_from_epoch=70,
+        start_from_epoch=50,
         restore_best_weights=True,
     )
 
@@ -47,7 +47,7 @@ def screening_metrics():
         Precision(name='Precision', thresholds=0.5),
         Recall(name='Recall', thresholds=0.5),
         BinaryAccuracy(name='Accuracy', threshold=0.5),
-        F1Score(name='F1_score', threshold=0.5)
+        F1Score(name='F1_score', threshold=0.5, average='weighted')
     ]
 
 
