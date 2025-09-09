@@ -48,7 +48,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.9130.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8533.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
@@ -85,7 +85,7 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
 
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
 
@@ -129,7 +129,7 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
 
     res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
 
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
 

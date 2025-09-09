@@ -31,7 +31,7 @@ if __name__ == '__main__':
         validation_steps=43,
         verbose=1,
         class_weight=screening_class_weights(), 
-        callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau()]
+        callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
     )
 
     save_history(history=screening_net.history, file_dir=file_dir)
