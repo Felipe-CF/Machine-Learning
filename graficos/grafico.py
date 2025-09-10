@@ -11,7 +11,7 @@ def generate_grafics(test_regularization, params, epochs, label_line, figsize=(6
 
     axes = axes.ravel()
 
-    plt.subplots_adjust(hspace=0.9, wspace=0.3) 
+    plt.subplots_adjust(hspace=0.9, wspace=0.3, left=0.3) 
 
     fig.suptitle('Histórico de Testes de Regularização', fontsize=18)
 

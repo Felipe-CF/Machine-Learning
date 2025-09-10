@@ -2,7 +2,6 @@ import keras
 from hyperparameters import *
 import numpy as np, random
 from create_screening_net import *
-import matplotlib.pyplot as plt
 from keras.optimizers import SGD
 from keras.losses import BinaryCrossentropy
 
