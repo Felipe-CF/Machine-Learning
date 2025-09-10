@@ -25,7 +25,7 @@ if __name__ == '__main__':
     screening_net.fit(
         training_set, 
         steps_per_epoch=174, 
-        epochs=20,
+        epochs=200,
         validation_data=validation_set,
         validation_steps=43,
         verbose=1,
