@@ -68,8 +68,8 @@ def create_sets(processing=None):
     training_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col=['0', '1', '2', '3', '4', '5', '6'],
-        x_col='7',
+        y_col=['0', '1'],
+        x_col='2',
         subset='training',
         batch_size=16,
         shuffle=True,
@@ -80,8 +80,8 @@ def create_sets(processing=None):
     validation_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
         dataframe=dataframe,
-        y_col=['0', '1', '2', '3', '4', '5', '6'],
-        x_col='7',
+        y_col=['0', '1'],
+        x_col='2',
         target_size=(320, 320),
         batch_size=16,
         class_mode='raw',
@@ -101,16 +101,16 @@ def dataframe_preprocessing():
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
-    # dataframe['Label'].replace(
-    #     {
-    #         "U>10" : 'P',
-    #         "U3-10" : 'P',
-    #         "E" : 'P', 
-    #         "AU" : 'P', 
-    #         "O" : 'P',
-    #         "S" : 'P' 
-    #     }, inplace=True
-    # )
+    dataframe['Label'].replace(
+        {
+            "U>10" : 'P',
+            "U3-10" : 'P',
+            "E" : 'P', 
+            "AU" : 'P', 
+            "O" : 'P',
+            "S" : 'P' 
+        }, inplace=True
+    )
 
     dataframe = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(dataframe)
 

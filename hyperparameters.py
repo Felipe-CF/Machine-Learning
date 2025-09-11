@@ -43,7 +43,7 @@ def learning_rate_plateau():
 def screening_metrics():
 
     return [
-        AUC(name='AUC', curve='ROC', multi_label=True, num_labels=7),
+        AUC(name='AUC', curve='ROC'),
         Precision(name='Precision', thresholds=0.5),
         Recall(name='Recall', thresholds=0.5),
         BinaryAccuracy(name='Accuracy', threshold=0.5),
@@ -53,21 +53,34 @@ def screening_metrics():
 
 def screening_class_weights():
 
-    # classes = {
-    #     "0": 0.8234,
-    #     "1": 1.2861,
-    # }
-
     classes = {
-        "N": 0.2343,
-        "U>10": 3.9817,
-        "U3-10": 3.8285,
-        "E": 3.3396,
-        "AU": 1.9829,
-        "O": 1.6758,
-        "S": 1.2198
+        "0": 0.8234,
+        "1": 1.2861,
     }
 
+    # classes = {
+    #     "0": 1.9829,
+    #     "1": 3.3396,
+    #     "2": 0.2343,
+    #     "3": 1.6758,
+    #     "4": 1.2198,
+    #     "5": 3.8285,
+    #     "6": 3.9817,
+    # }
+
+# AU: 0
+
+# E: 1
+
+# N: 2
+
+# O: 3
+
+# S: 4
+
+# U3-10: 5
+
+# U>10: 6
     classes_weight = {int(key): value for key, value in classes.items()}
 
     return classes_weight

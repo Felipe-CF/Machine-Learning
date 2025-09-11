@@ -4,7 +4,7 @@ from keras.regularizers import L2, L1
 from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
 from keras.initializers import HeNormal, Constant
-from keras.layers import Conv2D, BatchNormalization, Dense, Dropout, PReLU
+from keras.layers import Conv2D, BatchNormalization, Dense, PReLU
 
 
 def create_load_net(file_dir=None):
@@ -42,14 +42,9 @@ def create_load_net(file_dir=None):
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
         
         outputs = Dense(
-            units=7, 
-            activation='sigmoid',
+            units=2, 
+            activation='softmax',
             kernel_initializer=HeNormal())(res_net_layers)
-        
-        # outputs = Dense(
-        #     units=2, 
-        #     activation='softmax',
-        #     kernel_initializer=HeNormal())(res_net_layers)
         
         return Model(inputs, outputs)
         
