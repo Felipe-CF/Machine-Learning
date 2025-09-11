@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # screening_net = create_load_net(file_dir)
 
     screening_net.compile(
-        optimizer=SGD(learning_rate=0.0025, momentum=0.99, name='SGD'), 
+        optimizer=SGD(learning_rate=0.001, momentum=0.99, name='SGD'), 
         loss=BinaryCrossentropy(), 
         metrics=screening_metrics()
     )
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     screening_net.fit(
         training_set, 
         steps_per_epoch=174, 
-        epochs=200,
+        epochs=100,
         validation_data=validation_set,
         validation_steps=43,
         verbose=1,

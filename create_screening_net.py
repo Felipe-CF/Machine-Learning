@@ -1,9 +1,9 @@
 import keras
 from screening_util import *
-from keras.regularizers import L2, L1L2, L1
+from keras.regularizers import L2, L1
 from keras.layers import BatchNormalization, LeakyReLU, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
-from keras.initializers import TruncatedNormal
+from keras.initializers import TruncatedNormal, HeNormal
 from keras.layers import Conv2D, BatchNormalization, Dense, Dropout
 
 
@@ -48,7 +48,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8363.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
