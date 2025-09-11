@@ -3,8 +3,8 @@ from screening_util import *
 from keras.regularizers import L2, L1
 from keras.layers import BatchNormalization, LeakyReLU, GlobalAveragePooling2D, Dense, add
 from keras.models import Model  
-from keras.initializers import TruncatedNormal, HeNormal
-from keras.layers import Conv2D, BatchNormalization, Dense, Dropout
+from keras.initializers import HeNormal, Constant
+from keras.layers import Conv2D, BatchNormalization, Dense, Dropout, PReLU
 
 
 def create_load_net(file_dir=None):
@@ -19,17 +19,18 @@ def create_load_net(file_dir=None):
             strides=2, 
             filters=64, 
             padding='same',
-            kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0)
-            )(inputs)
+            kernel_initializer=HeNormal())(inputs)
 
         res_net_layers = BatchNormalization()(res_net_layers)
 
-        res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+        res_net_layers = PReLU(alpha_initializer=Constant(0.25))(res_net_layers)
 
         res_net_layers = add_identity_block(res_net_layers, filters=64)
 
         res_net_layers = add_projection_block(res_net_layers, filters=64)
 
+        res_net_layers = add_identity_block(res_net_layers, filters=64)
+        
         res_net_layers = add_projection_block(res_net_layers, filters=128)
 
         res_net_layers = add_projection_block(res_net_layers, filters=256)
@@ -41,14 +42,14 @@ def create_load_net(file_dir=None):
         outputs = Dense(
             units=2, 
             activation='softmax',
-            kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
+            kernel_initializer=HeNormal())(res_net_layers)
         
         return Model(inputs, outputs)
         
     else:
         checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8363.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8764.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
@@ -63,29 +64,29 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
+        kernel_initializer=HeNormal())(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
 
-    res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
 
     # 2nd layer
     res_net_layers = Conv2D( 
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
+        kernel_initializer=HeNormal())(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
 
-    res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
 
     # adding residual connection
     res_net_layers = add([res_net_layers, skip_connection])
 
-    res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
 
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
 
@@ -99,18 +100,18 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
         kernel_size=kernel_size, 
         padding="same", 
         strides=2,
-        kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
+        kernel_initializer=HeNormal())(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
 
-    res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
 
     # 2nd layer
     res_net_layers = Conv2D( 
         filters=filters, 
         kernel_size=kernel_size, 
         padding="same",
-        kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(res_net_layers)
+        kernel_initializer=HeNormal())(res_net_layers)
 
     res_net_layers = BatchNormalization()(res_net_layers)
 
@@ -120,16 +121,16 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
         kernel_size=(1, 1),
         strides=2, 
         padding='same',
-        kernel_initializer=TruncatedNormal(mean=0.0, stddev=1.0))(skip_connection)
+        kernel_initializer=HeNormal())(skip_connection)
 
     projection_connection = BatchNormalization()(projection_connection)
 
     # adding residual connection
     res_net_layers = add([res_net_layers, projection_connection])
 
-    res_net_layers = LeakyReLU(alpha=0.01)(res_net_layers)
+    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
 
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+    res_net_layers = (res_net_layers)
 
     return res_net_layers
 
