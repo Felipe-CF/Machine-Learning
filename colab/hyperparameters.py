@@ -7,10 +7,10 @@ def early_stopping():
 
     return EarlyStopping(
         monitor='val_AUC',
-        min_delta=0.1,
+        min_delta=0.001,
         patience=10,
         mode='max',
-        start_from_epoch=30,
+        start_from_epoch=70,
         restore_best_weights=True,
     )
 
@@ -34,8 +34,8 @@ def learning_rate_plateau():
         mode='max',
         factor=0.1, 
         patience=10,
-        min_delta=0.1,
-        cooldown=0,
+        min_delta=0.001,
+        cooldown=5,
         verbose=1
     )
 
@@ -58,29 +58,6 @@ def screening_class_weights():
         "1": 1.2861,
     }
 
-    # classes = {
-    #     "0": 1.9829,
-    #     "1": 3.3396,
-    #     "2": 0.2343,
-    #     "3": 1.6758,
-    #     "4": 1.2198,
-    #     "5": 3.8285,
-    #     "6": 3.9817,
-    # }
-
-# AU: 0
-
-# E: 1
-
-# N: 2
-
-# O: 3
-
-# S: 4
-
-# U3-10: 5
-
-# U>10: 6
     classes_weight = {int(key): value for key, value in classes.items()}
 
     return classes_weight
@@ -100,13 +77,12 @@ def classification_metrics():
 def classification_class_weights():
 
     classes = {
-        "N": 0.2343,
-        "U>10": 3.9817,
-        "U3-10": 3.8285,
-        "E": 3.3396,
-        "AU": 1.9829,
-        "O": 1.6758,
-        "S": 1.2198
+        "0": 0.903,
+        "1": 1.813,
+        "2": 1.521,
+        "3": 1.744,
+        "4": 0.556,
+        "5": 0.763,
     }
 
     classes_weight = {int(key): value for key, value in classes.items()}
