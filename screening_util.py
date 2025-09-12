@@ -52,6 +52,8 @@ def create_sets(processing=None):
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
         vertical_flip=True, # aleatorio
+        brightness_range=[0.2, 0.8],
+        samplewise_std_normalization=True,
         validation_split=0.2, # separação do subset de Validation
     )
 
