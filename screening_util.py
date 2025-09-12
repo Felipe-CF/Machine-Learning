@@ -51,6 +51,7 @@ def create_sets(processing=None):
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
+        vertical_flip=True, # aleatorio
         validation_split=0.2, # separação do subset de Validation
     )
 

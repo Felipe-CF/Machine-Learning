@@ -1,7 +1,7 @@
 import keras
 from screening_util import *
 from keras.regularizers import L2, L1
-from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add
+from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add, MaxPooling2D
 from keras.models import Model  
 from keras.initializers import HeNormal, Constant
 from keras.layers import Conv2D, BatchNormalization, Dense, PReLU
@@ -17,31 +17,28 @@ def create_load_net(file_dir=None):
         res_net_layers =  Conv2D(
             kernel_size=(7, 7), 
             strides=2, 
-            filters=32, 
+            filters=64, 
             padding='same',
             kernel_initializer=HeNormal())(inputs)
-
+        
+        # 160
         res_net_layers = BatchNormalization()(res_net_layers)
 
         res_net_layers = PReLU(alpha_initializer=Constant(0.25))(res_net_layers)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=32)
+        res_net_layers = MaxPooling2D()(res_net_layers)
 
+        # 80
         res_net_layers = add_projection_block(res_net_layers, filters=64)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=64)
-
+        # 40
         res_net_layers = add_projection_block(res_net_layers, filters=128)
         
-        res_net_layers = add_identity_block(res_net_layers, filters=128)
-
+        # 20
         res_net_layers = add_projection_block(res_net_layers, filters=256)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=256)
-
+        # 10
         res_net_layers = add_projection_block(res_net_layers, filters=512)
-
-        res_net_layers = add_identity_block(res_net_layers, filters=512)
 
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
         
@@ -55,7 +52,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8764.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8746.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
