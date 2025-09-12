@@ -21,23 +21,18 @@ def create_load_net(file_dir=None):
             padding='same',
             kernel_initializer=HeNormal())(inputs)
         
-        # 160
         res_net_layers = BatchNormalization()(res_net_layers)
 
         res_net_layers = PReLU(alpha_initializer=Constant(0.25))(res_net_layers)
 
         res_net_layers = MaxPooling2D()(res_net_layers)
 
-        # 80
         res_net_layers = add_projection_block(res_net_layers, filters=64)
 
-        # 40
         res_net_layers = add_projection_block(res_net_layers, filters=128)
         
-        # 20
         res_net_layers = add_projection_block(res_net_layers, filters=256)
 
-        # 10
         res_net_layers = add_projection_block(res_net_layers, filters=512)
 
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
