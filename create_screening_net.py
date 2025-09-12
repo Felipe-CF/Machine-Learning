@@ -26,7 +26,7 @@ def create_load_net(file_dir=None):
         res_net_layers = PReLU(alpha_initializer=Constant(0.25))(res_net_layers)
 
         res_net_layers = add_identity_block(res_net_layers, filters=64)
-        
+
         res_net_layers = add_identity_block(res_net_layers, filters=64)
 
         res_net_layers = add_projection_block(res_net_layers, filters=128)
@@ -35,12 +35,8 @@ def create_load_net(file_dir=None):
 
         res_net_layers = add_projection_block(res_net_layers, filters=256)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=256)
-
         res_net_layers = add_projection_block(res_net_layers, filters=512)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=512)
-       
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
         
         outputs = Dense(
