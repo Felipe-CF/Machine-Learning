@@ -10,7 +10,7 @@ def early_stopping():
         min_delta=0.1,
         patience=10,
         mode='max',
-        start_from_epoch=30,
+        start_from_epoch=50,
         restore_best_weights=True,
     )
 
