@@ -10,7 +10,7 @@ def early_stopping():
         min_delta=0.1,
         patience=10,
         mode='max',
-        start_from_epoch=50,
+        start_from_epoch=30,
         restore_best_weights=True,
     )
 
@@ -34,7 +34,7 @@ def learning_rate_plateau():
         mode='max',
         factor=0.1, 
         patience=10,
-        min_delta=0.1,
+        min_delta=0.01,
         cooldown=0,
         verbose=1
     )

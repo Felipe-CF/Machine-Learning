@@ -1,0 +1,168 @@
+Epoch 1/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 2s/step - AUC: 0.5354 - Accuracy: 0.5212 - F1_score: 0.5224 - Precision: 0.5212 - Recall: 0.5212 - loss: 0.8544
+Epoch 1: val_AUC improved from -inf to 0.67909, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.6791.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 321s 2s/step - AUC: 0.5355 - Accuracy: 0.5213 - F1_score: 0.5225 - Precision: 0.5213 - Recall: 0.5213 - loss: 0.8540 - val_AUC: 0.6791 - val_Accuracy: 0.6701 - val_F1_score: 0.5377 - val_Precision: 0.6701 - val_Recall: 0.6701 - val_loss: 1.4213 - learning_rate: 0.1000
+Epoch 2/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:51 992ms/step - AUC: 0.6641 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6545C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\venv\lib\site-packages\keras\src\trainers\epoch_iterator.py:116: UserWarning: Your input ran out of data; interrupting training. Make sure that your dataset or generator can generate at least `steps_per_epoch * epochs` batches. You may need to use the `.repeat()` function when building your dataset.
+  self._interrupted_warning()
+
+Epoch 2: val_AUC improved from 0.67909 to 0.68597, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.6860.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 40s 223ms/step - AUC: 0.6641 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6545 - val_AUC: 0.6860 - val_Accuracy: 0.6759 - val_F1_score: 0.5452 - val_Precision: 0.6759 - val_Recall: 0.6759 - val_loss: 1.3714 - learning_rate: 0.1000
+Epoch 3/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.6281 - Accuracy: 0.5911 - F1_score: 0.5927 - Precision: 0.5911 - Recall: 0.5911 - loss: 0.6680
+Epoch 3: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 329s 2s/step - AUC: 0.6281 - Accuracy: 0.5912 - F1_score: 0.5927 - Precision: 0.5912 - Recall: 0.5912 - loss: 0.6680 - val_AUC: 0.3548 - val_Accuracy: 0.3590 - val_F1_score: 0.2911 - val_Precision: 0.3590 - val_Recall: 0.3590 - val_loss: 1.0145 - learning_rate: 0.1000
+Epoch 4/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 985ms/step - AUC: 0.7773 - Accuracy: 0.6875 - F1_score: 0.6761 - Precision: 0.6875 - Recall: 0.6875 - loss: 0.5563
+Epoch 4: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 38s 216ms/step - AUC: 0.7773 - Accuracy: 0.6875 - F1_score: 0.6761 - Precision: 0.6875 - Recall: 0.6875 - loss: 0.5563 - val_AUC: 0.3486 - val_Accuracy: 0.3532 - val_F1_score: 0.2835 - val_Precision: 0.3532 - val_Recall: 0.3532 - val_loss: 1.0097 - learning_rate: 0.1000
+Epoch 5/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.6727 - Accuracy: 0.6229 - F1_score: 0.6254 - Precision: 0.6229 - Recall: 0.6229 - loss: 0.6493
+Epoch 5: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 277s 2s/step - AUC: 0.6727 - Accuracy: 0.6229 - F1_score: 0.6255 - Precision: 0.6229 - Recall: 0.6229 - loss: 0.6493 - val_AUC: 0.4104 - val_Accuracy: 0.3517 - val_F1_score: 0.2164 - val_Precision: 0.3517 - val_Recall: 0.3517 - val_loss: 1.1468 - learning_rate: 0.1000
+Epoch 6/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 987ms/step - AUC: 0.7656 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6243
+Epoch 6: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 41s 229ms/step - AUC: 0.7656 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6243 - val_AUC: 0.4097 - val_Accuracy: 0.3474 - val_F1_score: 0.2144 - val_Precision: 0.3474 - val_Recall: 0.3474 - val_loss: 1.0796 - learning_rate: 0.1000
+Epoch 7/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.7289 - Accuracy: 0.6840 - F1_score: 0.6851 - Precision: 0.6840 - Recall: 0.6840 - loss: 0.6199
+Epoch 7: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 290s 2s/step - AUC: 0.7290 - Accuracy: 0.6840 - F1_score: 0.6851 - Precision: 0.6840 - Recall: 0.6840 - loss: 0.6198 - val_AUC: 0.5402 - val_Accuracy: 0.5233 - val_F1_score: 0.5062 - val_Precision: 0.5233 - val_Recall: 0.5233 - val_loss: 0.7506 - learning_rate: 0.1000
+Epoch 8/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:51 989ms/step - AUC: 0.7422 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6051
+Epoch 8: val_AUC did not improve from 0.68597
+174/174 ━━━━━━━━━━━━━━━━━━━━ 38s 217ms/step - AUC: 0.7422 - Accuracy: 0.6250 - F1_score: 0.6250 - Precision: 0.6250 - Recall: 0.6250 - loss: 0.6051 - val_AUC: 0.5326 - val_Accuracy: 0.5000 - val_F1_score: 0.4726 - val_Precision: 0.5000 - val_Recall: 0.5000 - val_loss: 0.7605 - learning_rate: 0.1000
+Epoch 9/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8294 - Accuracy: 0.7598 - F1_score: 0.7586 - Precision: 0.7598 - Recall: 0.7598 - loss: 0.5251
+Epoch 9: val_AUC improved from 0.68597 to 0.83576, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.8358.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 332s 2s/step - AUC: 0.8295 - Accuracy: 0.7598 - F1_score: 0.7586 - Precision: 0.7598 - Recall: 0.7598 - loss: 0.5251 - val_AUC: 0.8358 - val_Accuracy: 0.7471 - val_F1_score: 0.7421 - val_Precision: 0.7471 - val_Recall: 0.7471 - val_loss: 0.5356 - learning_rate: 0.1000
+Epoch 10/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:48 973ms/step - AUC: 0.7930 - Accuracy: 0.8125 - F1_score: 0.8003 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.5947
+Epoch 10: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 41s 229ms/step - AUC: 0.7930 - Accuracy: 0.8125 - F1_score: 0.8003 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.5947 - val_AUC: 0.8317 - val_Accuracy: 0.7471 - val_F1_score: 0.7413 - val_Precision: 0.7471 - val_Recall: 0.7471 - val_loss: 0.5406 - learning_rate: 0.1000
+Epoch 11/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8585 - Accuracy: 0.7914 - F1_score: 0.7898 - Precision: 0.7914 - Recall: 0.7914 - loss: 0.4772
+Epoch 11: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 281s 2s/step - AUC: 0.8584 - Accuracy: 0.7914 - F1_score: 0.7898 - Precision: 0.7914 - Recall: 0.7914 - loss: 0.4773 - val_AUC: 0.8187 - val_Accuracy: 0.7733 - val_F1_score: 0.7771 - val_Precision: 0.7733 - val_Recall: 0.7733 - val_loss: 0.5759 - learning_rate: 0.1000
+Epoch 12/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:58 1s/step - AUC: 0.9570 - Accuracy: 0.8125 - F1_score: 0.8148 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.3143
+Epoch 12: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 40s 224ms/step - AUC: 0.9570 - Accuracy: 0.8125 - F1_score: 0.8148 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.3143 - val_AUC: 0.8232 - val_Accuracy: 0.7660 - val_F1_score: 0.7674 - val_Precision: 0.7660 - val_Recall: 0.7660 - val_loss: 0.5539 - learning_rate: 0.1000
+Epoch 13/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8499 - Accuracy: 0.7630 - F1_score: 0.7632 - Precision: 0.7630 - Recall: 0.7630 - loss: 0.4822
+Epoch 13: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 293s 2s/step - AUC: 0.8500 - Accuracy: 0.7630 - F1_score: 0.7633 - Precision: 0.7630 - Recall: 0.7630 - loss: 0.4822 - val_AUC: 0.6595 - val_Accuracy: 0.6337 - val_F1_score: 0.6374 - val_Precision: 0.6337 - val_Recall: 0.6337 - val_loss: 0.9935 - learning_rate: 0.1000
+Epoch 14/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:53 1s/step - AUC: 0.6367 - Accuracy: 0.5625 - F1_score: 0.5572 - Precision: 0.5625 - Recall: 0.5625 - loss: 0.7856
+Epoch 14: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 37s 210ms/step - AUC: 0.6367 - Accuracy: 0.5625 - F1_score: 0.5572 - Precision: 0.5625 - Recall: 0.5625 - loss: 0.7856 - val_AUC: 0.6900 - val_Accuracy: 0.6715 - val_F1_score: 0.6792 - val_Precision: 0.6715 - val_Recall: 0.6715 - val_loss: 0.9057 - learning_rate: 0.1000
+Epoch 15/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8775 - Accuracy: 0.8037 - F1_score: 0.8042 - Precision: 0.8037 - Recall: 0.8037 - loss: 0.4456
+Epoch 15: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 277s 2s/step - AUC: 0.8775 - Accuracy: 0.8037 - F1_score: 0.8042 - Precision: 0.8037 - Recall: 0.8037 - loss: 0.4455 - val_AUC: 0.8176 - val_Accuracy: 0.7660 - val_F1_score: 0.7364 - val_Precision: 0.7660 - val_Recall: 0.7660 - val_loss: 0.5403 - learning_rate: 0.1000
+Epoch 16/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:51 989ms/step - AUC: 0.9297 - Accuracy: 0.7500 - F1_score: 0.7227 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.4235
+Epoch 16: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 40s 223ms/step - AUC: 0.9297 - Accuracy: 0.7500 - F1_score: 0.7227 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.4235 - val_AUC: 0.8280 - val_Accuracy: 0.7631 - val_F1_score: 0.7353 - val_Precision: 0.7631 - val_Recall: 0.7631 - val_loss: 0.5226 - learning_rate: 0.1000
+Epoch 17/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8718 - Accuracy: 0.7995 - F1_score: 0.7995 - Precision: 0.7995 - Recall: 0.7995 - loss: 0.4560
+Epoch 17: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 277s 2s/step - AUC: 0.8718 - Accuracy: 0.7995 - F1_score: 0.7995 - Precision: 0.7995 - Recall: 0.7995 - loss: 0.4560 - val_AUC: 0.6579 - val_Accuracy: 0.6090 - val_F1_score: 0.6174 - val_Precision: 0.6090 - val_Recall: 0.6090 - val_loss: 0.7105 - learning_rate: 0.1000
+Epoch 18/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:51 993ms/step - AUC: 0.8828 - Accuracy: 0.8125 - F1_score: 0.8132 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4741
+Epoch 18: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 39s 218ms/step - AUC: 0.8828 - Accuracy: 0.8125 - F1_score: 0.8132 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4741 - val_AUC: 0.6646 - val_Accuracy: 0.6090 - val_F1_score: 0.6181 - val_Precision: 0.6090 - val_Recall: 0.6090 - val_loss: 0.6992 - learning_rate: 0.1000
+Epoch 19/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8707 - Accuracy: 0.7914 - F1_score: 0.7922 - Precision: 0.7914 - Recall: 0.7914 - loss: 0.4536
+Epoch 19: val_AUC did not improve from 0.83576
+
+Epoch 19: ReduceLROnPlateau reducing learning rate to 0.010000000149011612.
+174/174 ━━━━━━━━━━━━━━━━━━━━ 278s 2s/step - AUC: 0.8707 - Accuracy: 0.7914 - F1_score: 0.7922 - Precision: 0.7914 - Recall: 0.7914 - loss: 0.4536 - val_AUC: 0.7111 - val_Accuracy: 0.6715 - val_F1_score: 0.6763 - val_Precision: 0.6715 - val_Recall: 0.6715 - val_loss: 1.0851 - learning_rate: 0.1000
+Epoch 20/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:52 1000ms/step - AUC: 0.9062 - Accuracy: 0.7500 - F1_score: 0.7500 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.4649
+Epoch 20: val_AUC did not improve from 0.83576
+174/174 ━━━━━━━━━━━━━━━━━━━━ 38s 215ms/step - AUC: 0.9062 - Accuracy: 0.7500 - F1_score: 0.7500 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.4649 - val_AUC: 0.7176 - val_Accuracy: 0.6817 - val_F1_score: 0.6882 - val_Precision: 0.6817 - val_Recall: 0.6817 - val_loss: 1.0137 - learning_rate: 0.0100
+Epoch 21/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9049 - Accuracy: 0.8281 - F1_score: 0.8274 - Precision: 0.8281 - Recall: 0.8281 - loss: 0.4084
+Epoch 21: val_AUC improved from 0.83576 to 0.83899, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.8390.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 290s 2s/step - AUC: 0.9048 - Accuracy: 0.8281 - F1_score: 0.8274 - Precision: 0.8281 - Recall: 0.8281 - loss: 0.4085 - val_AUC: 0.8390 - val_Accuracy: 0.7820 - val_F1_score: 0.7793 - val_Precision: 0.7820 - val_Recall: 0.7820 - val_loss: 0.5004 - learning_rate: 0.0100
+Epoch 22/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:47 970ms/step - AUC: 0.9102 - Accuracy: 0.8125 - F1_score: 0.8118 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4044
+Epoch 22: val_AUC improved from 0.83899 to 0.84442, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.8444.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 39s 220ms/step - AUC: 0.9102 - Accuracy: 0.8125 - F1_score: 0.8118 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4044 - val_AUC: 0.8444 - val_Accuracy: 0.7907 - val_F1_score: 0.7877 - val_Precision: 0.7907 - val_Recall: 0.7907 - val_loss: 0.4897 - learning_rate: 0.0100
+Epoch 23/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9030 - Accuracy: 0.8146 - F1_score: 0.8143 - Precision: 0.8146 - Recall: 0.8146 - loss: 0.4002
+Epoch 23: val_AUC did not improve from 0.84442
+174/174 ━━━━━━━━━━━━━━━━━━━━ 289s 2s/step - AUC: 0.9030 - Accuracy: 0.8147 - F1_score: 0.8143 - Precision: 0.8147 - Recall: 0.8147 - loss: 0.4002 - val_AUC: 0.8199 - val_Accuracy: 0.7602 - val_F1_score: 0.7512 - val_Precision: 0.7602 - val_Recall: 0.7602 - val_loss: 0.5233 - learning_rate: 0.0100
+Epoch 24/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 985ms/step - AUC: 0.9375 - Accuracy: 0.8750 - F1_score: 0.8770 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3843
+Epoch 24: val_AUC did not improve from 0.84442
+174/174 ━━━━━━━━━━━━━━━━━━━━ 35s 197ms/step - AUC: 0.9375 - Accuracy: 0.8750 - F1_score: 0.8770 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3843 - val_AUC: 0.8181 - val_Accuracy: 0.7616 - val_F1_score: 0.7516 - val_Precision: 0.7616 - val_Recall: 0.7616 - val_loss: 0.5278 - learning_rate: 0.0100
+Epoch 25/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9032 - Accuracy: 0.8315 - F1_score: 0.8317 - Precision: 0.8315 - Recall: 0.8315 - loss: 0.3960
+Epoch 25: val_AUC improved from 0.84442 to 0.84834, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.8483.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 293s 2s/step - AUC: 0.9032 - Accuracy: 0.8314 - F1_score: 0.8317 - Precision: 0.8314 - Recall: 0.8314 - loss: 0.3960 - val_AUC: 0.8483 - val_Accuracy: 0.7878 - val_F1_score: 0.7839 - val_Precision: 0.7878 - val_Recall: 0.7878 - val_loss: 0.4917 - learning_rate: 0.0100
+Epoch 26/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:47 971ms/step - AUC: 0.9961 - Accuracy: 0.9375 - F1_score: 0.9389 - Precision: 0.9375 - Recall: 0.9375 - loss: 0.1443
+Epoch 26: val_AUC improved from 0.84834 to 0.85102, saving model to C:\Users\FelipeCF\Desktop\Codigos\Machine-Learning\screening_checkpoints\crohn_net_0.8510.keras
+174/174 ━━━━━━━━━━━━━━━━━━━━ 40s 227ms/step - AUC: 0.9961 - Accuracy: 0.9375 - F1_score: 0.9389 - Precision: 0.9375 - Recall: 0.9375 - loss: 0.1443 - val_AUC: 0.8510 - val_Accuracy: 0.7892 - val_F1_score: 0.7858 - val_Precision: 0.7892 - val_Recall: 0.7892 - val_loss: 0.4827 - learning_rate: 0.0100
+Epoch 27/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9132 - Accuracy: 0.8306 - F1_score: 0.8310 - Precision: 0.8306 - Recall: 0.8306 - loss: 0.3792
+Epoch 27: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 291s 2s/step - AUC: 0.9132 - Accuracy: 0.8306 - F1_score: 0.8310 - Precision: 0.8306 - Recall: 0.8306 - loss: 0.3793 - val_AUC: 0.8295 - val_Accuracy: 0.7674 - val_F1_score: 0.7642 - val_Precision: 0.7674 - val_Recall: 0.7674 - val_loss: 0.5168 - learning_rate: 0.0100
+Epoch 28/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 985ms/step - AUC: 0.8555 - Accuracy: 0.6875 - F1_score: 0.6761 - Precision: 0.6875 - Recall: 0.6875 - loss: 0.5768
+Epoch 28: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 40s 224ms/step - AUC: 0.8555 - Accuracy: 0.6875 - F1_score: 0.6761 - Precision: 0.6875 - Recall: 0.6875 - loss: 0.5768 - val_AUC: 0.8345 - val_Accuracy: 0.7645 - val_F1_score: 0.7606 - val_Precision: 0.7645 - val_Recall: 0.7645 - val_loss: 0.5074 - learning_rate: 0.0100
+Epoch 29/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9138 - Accuracy: 0.8340 - F1_score: 0.8346 - Precision: 0.8340 - Recall: 0.8340 - loss: 0.3738
+Epoch 29: val_AUC did not improve from 0.85102
+
+Epoch 29: ReduceLROnPlateau reducing learning rate to 0.0009999999776482583.
+174/174 ━━━━━━━━━━━━━━━━━━━━ 293s 2s/step - AUC: 0.9137 - Accuracy: 0.8339 - F1_score: 0.8346 - Precision: 0.8339 - Recall: 0.8339 - loss: 0.3738 - val_AUC: 0.8293 - val_Accuracy: 0.7602 - val_F1_score: 0.7611 - val_Precision: 0.7602 - val_Recall: 0.7602 - val_loss: 0.5229 - learning_rate: 0.0100
+Epoch 30/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:48 976ms/step - AUC: 0.8945 - Accuracy: 0.8125 - F1_score: 0.8102 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4390
+Epoch 30: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 38s 217ms/step - AUC: 0.8945 - Accuracy: 0.8125 - F1_score: 0.8102 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.4390 - val_AUC: 0.8294 - val_Accuracy: 0.7718 - val_F1_score: 0.7727 - val_Precision: 0.7718 - val_Recall: 0.7718 - val_loss: 0.5187 - learning_rate: 1.0000e-03
+Epoch 31/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.8970 - Accuracy: 0.8105 - F1_score: 0.8110 - Precision: 0.8105 - Recall: 0.8105 - loss: 0.4130
+Epoch 31: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 290s 2s/step - AUC: 0.8970 - Accuracy: 0.8106 - F1_score: 0.8110 - Precision: 0.8106 - Recall: 0.8106 - loss: 0.4129 - val_AUC: 0.8350 - val_Accuracy: 0.7849 - val_F1_score: 0.7846 - val_Precision: 0.7849 - val_Recall: 0.7849 - val_loss: 0.5122 - learning_rate: 1.0000e-03
+Epoch 32/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:52 995ms/step - AUC: 0.9531 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3077
+Epoch 32: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 38s 216ms/step - AUC: 0.9531 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3077 - val_AUC: 0.8314 - val_Accuracy: 0.7703 - val_F1_score: 0.7692 - val_Precision: 0.7703 - val_Recall: 0.7703 - val_loss: 0.5248 - learning_rate: 1.0000e-03
+Epoch 33/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9116 - Accuracy: 0.8275 - F1_score: 0.8279 - Precision: 0.8275 - Recall: 0.8275 - loss: 0.3854
+Epoch 33: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 277s 2s/step - AUC: 0.9116 - Accuracy: 0.8276 - F1_score: 0.8280 - Precision: 0.8276 - Recall: 0.8276 - loss: 0.3854 - val_AUC: 0.8299 - val_Accuracy: 0.7762 - val_F1_score: 0.7762 - val_Precision: 0.7762 - val_Recall: 0.7762 - val_loss: 0.5205 - learning_rate: 1.0000e-03
+Epoch 34/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:53 1s/step - AUC: 0.7344 - Accuracy: 0.7500 - F1_score: 0.7500 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.7051
+Epoch 34: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 41s 229ms/step - AUC: 0.7344 - Accuracy: 0.7500 - F1_score: 0.7500 - Precision: 0.7500 - Recall: 0.7500 - loss: 0.7051 - val_AUC: 0.8334 - val_Accuracy: 0.7733 - val_F1_score: 0.7730 - val_Precision: 0.7733 - val_Recall: 0.7733 - val_loss: 0.5146 - learning_rate: 1.0000e-03
+Epoch 35/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9123 - Accuracy: 0.8389 - F1_score: 0.8391 - Precision: 0.8389 - Recall: 0.8389 - loss: 0.3792
+Epoch 35: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 294s 2s/step - AUC: 0.9123 - Accuracy: 0.8390 - F1_score: 0.8391 - Precision: 0.8390 - Recall: 0.8390 - loss: 0.3791 - val_AUC: 0.8438 - val_Accuracy: 0.7834 - val_F1_score: 0.7838 - val_Precision: 0.7834 - val_Recall: 0.7834 - val_loss: 0.4959 - learning_rate: 1.0000e-03
+Epoch 36/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:55 1s/step - AUC: 0.9297 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3687
+Epoch 36: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 37s 211ms/step - AUC: 0.9297 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3687 - val_AUC: 0.8309 - val_Accuracy: 0.7631 - val_F1_score: 0.7621 - val_Precision: 0.7631 - val_Recall: 0.7631 - val_loss: 0.5168 - learning_rate: 1.0000e-03
+Epoch 37/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9104 - Accuracy: 0.8391 - F1_score: 0.8393 - Precision: 0.8391 - Recall: 0.8391 - loss: 0.3865
+Epoch 37: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 295s 2s/step - AUC: 0.9104 - Accuracy: 0.8391 - F1_score: 0.8393 - Precision: 0.8391 - Recall: 0.8391 - loss: 0.3864 - val_AUC: 0.8463 - val_Accuracy: 0.7762 - val_F1_score: 0.7742 - val_Precision: 0.7762 - val_Recall: 0.7762 - val_loss: 0.4920 - learning_rate: 1.0000e-03
+Epoch 38/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 986ms/step - AUC: 0.9531 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3781
+Epoch 38: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 36s 204ms/step - AUC: 0.9531 - Accuracy: 0.8750 - F1_score: 0.8750 - Precision: 0.8750 - Recall: 0.8750 - loss: 0.3781 - val_AUC: 0.8256 - val_Accuracy: 0.7703 - val_F1_score: 0.7692 - val_Precision: 0.7703 - val_Recall: 0.7703 - val_loss: 0.5214 - learning_rate: 1.0000e-03
+Epoch 39/100
+174/174 ━━━━━━━━━━━━━━━━━━━━ 0s 1s/step - AUC: 0.9128 - Accuracy: 0.8403 - F1_score: 0.8409 - Precision: 0.8403 - Recall: 0.8403 - loss: 0.3779
+Epoch 39: val_AUC did not improve from 0.85102
+
+Epoch 39: ReduceLROnPlateau reducing learning rate to 9.999999310821295e-05.
+174/174 ━━━━━━━━━━━━━━━━━━━━ 283s 2s/step - AUC: 0.9128 - Accuracy: 0.8403 - F1_score: 0.8409 - Precision: 0.8403 - Recall: 0.8403 - loss: 0.3779 - val_AUC: 0.8274 - val_Accuracy: 0.7616 - val_F1_score: 0.7611 - val_Precision: 0.7616 - val_Recall: 0.7616 - val_loss: 0.5169 - learning_rate: 1.0000e-03
+Epoch 40/100
+  1/174 ━━━━━━━━━━━━━━━━━━━━ 2:50 988ms/step - AUC: 0.9336 - Accuracy: 0.8125 - F1_score: 0.8102 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.3791
+Epoch 40: val_AUC did not improve from 0.85102
+174/174 ━━━━━━━━━━━━━━━━━━━━ 42s 238ms/step - AUC: 0.9336 - Accuracy: 0.8125 - F1_score: 0.8102 - Precision: 0.8125 - Recall: 0.8125 - loss: 0.3791 - val_AUC: 0.8299 - val_Accuracy: 0.7747 - val_F1_score: 0.7748 - val_Precision: 0.7747 - val_Recall: 0.7747 - val_loss: 0.5167 - learning_rate: 1.0000e-04
