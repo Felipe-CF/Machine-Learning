@@ -7,7 +7,7 @@ def early_stopping():
 
     return EarlyStopping(
         monitor='val_AUC',
-        min_delta=0.1,
+        min_delta=0.01,
         patience=10,
         mode='max',
         start_from_epoch=30,
