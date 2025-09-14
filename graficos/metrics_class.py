@@ -59,6 +59,6 @@ class ModelMetrics:
         return self.__lr
     
     def __get_all(self):
-        return [self.__auc, self.__acc, self.__f1, self.__prec, self.__rec, self.__loss, self.__lr]
+        return [self.__auc, self.__acc, self.__f1, self.__prec, self.__rec, self.__loss]
 
 

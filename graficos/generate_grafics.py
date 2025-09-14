@@ -3,32 +3,37 @@ import matplotlib.pyplot as plt
 from metrics_class import ModelMetrics
 
 
-def generate_grafics(model, figsize=(6, 12), colors = ['red', 'green', 'blue', 'orange']):
+def generate_grafics(model, figsize=(6, 12), colors = ['red','blue']):
     fig, axes = plt.subplots(nrows=3, ncols=2, figsize=figsize)
 
     axes = axes.ravel()
 
     plt.subplots_adjust(hspace=0.9, wspace=0.3, left=0.3) 
 
+    params = ["AUC","Accuracy", "F1_score", "Precision", "Recall", "loss"]
+
     fig.suptitle('Histórico de Testes', fontsize=18)
 
-    for i, param in enumerate(params):
-        metrics = fit_metrics.get_metrics(param)
+    metrics = model.get_metrics()
 
-        for metric_color_label in zip(metrics, colors, label_line):
-            metric = metric_color_label[0]
+    for i, param in enumerate(metrics):
+        train, val = param
 
-            color=metric_color_label[1]
+        title = params[i]
 
-            label=metric_color_label[2]
+        epochs = [x+1 for x in range(len(train))]
 
-            axes[i].plot(epochs, metric, label=label, color=color, linestyle='-')
+        # axes[i].set_title(f'Métrica {title}')
+
+        axes[i].plot(epochs, train, label=f'train_{title}', color='red', linestyle='-')
+
+        axes[i].plot(epochs, val, label=f'val_{title}', color='blue', linestyle='-')
         
-        axes[i].set_title(f'Comparativo {param}')
+        axes[i].set_title(f'Comparativo {title}')
         
         axes[i].set_xlabel('Épocas')
 
-        axes[i].set_ylabel(f'{param}')
+        axes[i].set_ylabel(f'{title}')
 
         axes[i].legend()
 
@@ -38,6 +43,12 @@ def generate_grafics(model, figsize=(6, 12), colors = ['red', 'green', 'blue', '
 
     plt.show()
 
+
+def set_train():
+    pass
+
+def set_val():
+    pass
 
 if __name__ == '__main__':
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -53,7 +64,7 @@ if __name__ == '__main__':
 
     figsize=(6, 12)
 
-    colors = ['red', 'green', 'blue', 'orange']
+    colors = ['red', 'blue']
 
     generate_grafics(
         model=model_net, 
@@ -61,5 +72,5 @@ if __name__ == '__main__':
         colors=colors
         )
 
-
-    pass
+    x=2
+    

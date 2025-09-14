@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # screening_net = create_load_net(file_dir)
 
     screening_net.compile(
-        optimizer=SGD(learning_rate=0.1, momentum=0.9, name='SGD', weight_decay=0.0001), 
+        optimizer=SGD(learning_rate=0.001, momentum=0.9, name='SGD', weight_decay=0.0001), 
         loss=BinaryCrossentropy(), 
         metrics=screening_metrics()
     )
