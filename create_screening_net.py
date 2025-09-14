@@ -30,12 +30,8 @@ def create_load_net(file_dir=None):
         res_net_layers = add_identity_block(res_net_layers, filters=64)
         
         res_net_layers = add_projection_block(res_net_layers, filters=128)
-
-        res_net_layers = add_identity_block(res_net_layers, filters=128)
         
         res_net_layers = add_projection_block(res_net_layers, filters=256)
-
-        res_net_layers = add_identity_block(res_net_layers, filters=256)
 
         res_net_layers = add_projection_block(res_net_layers, filters=512)
 
