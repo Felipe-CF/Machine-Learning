@@ -33,8 +33,8 @@ def learning_rate_plateau():
         monitor='val_AUC',
         mode='max',
         factor=0.1, 
-        patience=10,
-        min_delta=0.01,
+        patience=5,
+        min_delta=0.001,
         cooldown=0,
         verbose=1
     )

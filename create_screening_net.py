@@ -21,9 +21,9 @@ def create_load_net(file_dir=None):
             padding='same',
             kernel_initializer=HeNormal())(inputs)
         
-        res_net_layers = BatchNormalization()(res_net_layers)
+        res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-        res_net_layers = PReLU(alpha_initializer=Constant(0.25))(res_net_layers)
+        res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
         res_net_layers = MaxPooling2D(pool_size=(3,3), strides=2)(res_net_layers)
 
@@ -55,7 +55,7 @@ def create_load_net(file_dir=None):
     else:
         checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
 
-        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8746.keras')
+        best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8587.keras')
 
         conv_net = keras.saving.load_model(best_model_path, compile=True, safe_mode=True, custom_objects=None)
     
@@ -72,9 +72,9 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
         padding="same",
         kernel_initializer=HeNormal())(res_net_layers)
 
-    res_net_layers = BatchNormalization()(res_net_layers)
+    res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
+    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     # 2nd layer
     res_net_layers = Conv2D( 
@@ -83,14 +83,14 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
         padding="same",
         kernel_initializer=HeNormal())(res_net_layers)
 
-    res_net_layers = BatchNormalization()(res_net_layers)
+    res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
+    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     # adding residual connection
     res_net_layers = add([res_net_layers, skip_connection])
 
-    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
+    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     res_net_layers = (res_net_layers)
 
@@ -108,9 +108,9 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
         strides=2,
         kernel_initializer=HeNormal())(res_net_layers)
 
-    res_net_layers = BatchNormalization()(res_net_layers)
+    res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
+    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     # 2nd layer
     res_net_layers = Conv2D( 
@@ -119,7 +119,7 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
         padding="same",
         kernel_initializer=HeNormal())(res_net_layers)
 
-    res_net_layers = BatchNormalization()(res_net_layers)
+    res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
     # adapting the channels differents sizes
     projection_connection = Conv2D(
@@ -129,12 +129,12 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
         padding='same',
         kernel_initializer=HeNormal())(skip_connection)
 
-    projection_connection = BatchNormalization()(projection_connection)
+    projection_connection = BatchNormalization(axis=-1)(projection_connection)
 
     # adding residual connection
     res_net_layers = add([res_net_layers, projection_connection])
 
-    res_net_layers = PReLU(Constant(0.25))(res_net_layers)
+    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     res_net_layers = (res_net_layers)
 
