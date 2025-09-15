@@ -7,10 +7,10 @@ def early_stopping():
 
     return EarlyStopping(
         monitor='val_AUC',
-        min_delta=0.01,
+        min_delta=0.001,
         patience=10,
         mode='max',
-        start_from_epoch=30,
+        start_from_epoch=50,
         restore_best_weights=True,
     )
 
@@ -99,14 +99,20 @@ def classification_metrics():
 
 def classification_class_weights():
 
+    # AU ==> column=0 
+    # E ==> column=1 
+    # O ==> column=2 
+    # S ==> column=3 
+    # U3-10 ==> column=4 
+    # U>10 ==> column=5
+
     classes = {
-        "N": 0.2343,
-        "U>10": 3.9817,
-        "U3-10": 3.8285,
-        "E": 3.3396,
-        "AU": 1.9829,
-        "O": 1.6758,
-        "S": 1.2198
+        "0": 0.903,
+        "1": 1.813,
+        "2": 1.521,
+        "3": 1.744,
+        "4": 0.556,
+        "5": 0.763,
     }
 
     classes_weight = {int(key): value for key, value in classes.items()}

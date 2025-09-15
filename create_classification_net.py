@@ -1,5 +1,5 @@
 import keras
-from screening_util import *
+from classification_util import *
 from keras.regularizers import L2, L1
 from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add, MaxPooling2D
 from keras.models import Model  
@@ -29,31 +29,23 @@ def create_load_net(file_dir=None):
 
         res_net_layers = add_identity_block(res_net_layers, filters=64)
         
-        res_net_layers = add_identity_block(res_net_layers, filters=64)
-        
         res_net_layers = add_projection_block(res_net_layers, filters=128)
         
-        res_net_layers = add_identity_block(res_net_layers, filters=128)
-
         res_net_layers = add_projection_block(res_net_layers, filters=256)
 
-        res_net_layers = add_identity_block(res_net_layers, filters=256)
-
         res_net_layers = add_projection_block(res_net_layers, filters=512)
-
-        res_net_layers = add_identity_block(res_net_layers, filters=512)
 
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
         
         outputs = Dense(
-            units=2, 
-            activation='softmax',
+            units=6, 
+            activation='sigmoid',
             kernel_initializer=HeNormal())(res_net_layers)
         
         return Model(inputs, outputs)
         
     else:
-        checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
+        checkpoint_dir = os.path.join(file_dir, 'classification_checkpoints')
 
         best_model_path = os.path.join(checkpoint_dir, 'crohn_net_0.8587.keras')
 
