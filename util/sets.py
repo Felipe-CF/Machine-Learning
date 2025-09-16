@@ -14,7 +14,7 @@ def create_sets(kfolds):
     for i, fold in enumerate(kfolds):
 
         if fold['test'] is False:
-            fold['test'] == True
+            fold['test'] = True
 
             validation_fold = kfolds.pop(i)
 
