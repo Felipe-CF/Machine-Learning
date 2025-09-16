@@ -14,9 +14,9 @@ def dataframe_preprocessing():
 
     dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description.csv')
 
-    dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
+    df = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
-    dataframe['Label'].replace(
+    df['Label'].replace(
         {
             "U>10" : 'P',
             "U3-10" : 'P',
@@ -27,8 +27,25 @@ def dataframe_preprocessing():
         }, inplace=True
     )
 
-    dataframe = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(dataframe)
+    df = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(df)
 
-    dataframe = pd.DataFrame(dataframe)
+    df = pd.DataFrame(df)
 
-    dataframe.to_csv('db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_screening_processed.csv')
+    df[0] = df[0].astype(float)
+    
+    df[1] = df[1].astype(float)
+
+    df = pd.DataFrame(df)
+
+    folds = []
+
+    for i in range(5):
+        kfold = {
+            'fold': pd.DataFrame(df[df[3] == i+1]),
+            'test': False,
+            'fold_n': i+1
+        }
+
+        folds.append(kfold)
+
+    return folds

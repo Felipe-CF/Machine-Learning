@@ -19,21 +19,31 @@ if __name__ == '__main__':
         metrics=screening_metrics()
     )
 
-    training_set, validation_set = create_sets()
+    kfolds = dataframe_preprocessing()
 
-    checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
+    for _ in range(5):
 
-    screening_net.fit(
-        training_set, 
-        steps_per_epoch=174, 
-        epochs=100,
-        validation_data=validation_set,
-        validation_steps=43,
-        verbose=1,
-        class_weight=screening_class_weights(), 
-        callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
-    )
+        training_set, validation_set, fold_test_n = create_sets(kfolds)
 
-    save_history(history=screening_net.history, file_dir=file_dir)
+        checkpoint_dir = os.path.join(file_dir, 'screening_checkpoints')
+
+        steps_per_epoch = training_set.n//16
+
+        validation_steps = validation_set.n//16
+
+        print(f'KFOLD {fold_test_n}')
+
+        screening_net.fit(
+            training_set, 
+            steps_per_epoch=steps_per_epoch, 
+            epochs=100,
+            validation_data=validation_set,
+            validation_steps=43,
+            verbose=1,
+            class_weight=screening_class_weights(), 
+            callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
+        )
+
+    save_history(history=screening_net.history, file_dir=file_dir, fold_test_n=fold_test_n)
 
 

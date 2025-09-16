@@ -1,4 +1,4 @@
-import os, json
+import os, json, random
 import pandas as pd
 import matplotlib as plt
 from util.preprocessing import *
@@ -6,36 +6,50 @@ from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
 
 
-def create_sets(processing=None):
-    data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
+def create_sets(kfolds):
+    training_df, validation_fold =  None, None
+
+    fold_test_n = 1
+
+    for i, fold in enumerate(kfolds):
+
+        if fold['test'] is False:
+            fold['test'] == True
+
+            validation_fold = kfolds.pop(i)
+
+            fold_test_n = validation_fold['fold_n']
+
+            break
+    
+    training_df = pd.concat([fold['fold'] for fold in kfolds])
+
+    validation_df = validation_fold['fold']
+
+    kfolds.append(validation_fold)
+
+    #objeto com regras para o pré-processamento de imagens
+    data_gen = ImageDataGenerator( 
         rescale=1./255, 
         # augmentation
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
         horizontal_flip=True, # aleatorio
         vertical_flip=True, # aleatorio
+        rotation_range=90,
         brightness_range=[0.2, 0.8],
         samplewise_std_normalization=True,
-        validation_split=0.2, # separação do subset de Validation
     )
 
     file_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-    if processing is None:
-        dataframe_preprocessing()
-
-    dataset_dir = file_dir + '\\db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
     
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
-
-    dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
+    dataset_dir = file_dir + '\\db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
 
     training_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
-        dataframe=dataframe,
-        y_col=['0', '1'],
-        x_col='2',
-        subset='training',
+        dataframe=training_df,
+        y_col=[0, 1],
+        x_col=2,
         batch_size=16,
         shuffle=True,
         class_mode='raw',
@@ -44,14 +58,16 @@ def create_sets(processing=None):
 
     validation_set = data_gen.flow_from_dataframe(
         directory= dataset_dir + '\\imgs',
-        dataframe=dataframe,
-        y_col=['0', '1'],
-        x_col='2',
+        dataframe=validation_df,
+        y_col=[0, 1],
+        x_col=2,
         target_size=(320, 320),
         batch_size=16,
         class_mode='raw',
         shuffle=True,
-        subset='validation'
         )
     
-    return training_set, validation_set
+    return training_set, validation_set, fold_test_n
+
+
+
