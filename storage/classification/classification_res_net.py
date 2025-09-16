@@ -1,6 +1,6 @@
 import keras
 from classification_util import *
-from hyperparameters import *
+from util.hyperparameters import *
 from create_classification_net import *
 from keras.optimizers import SGD
 

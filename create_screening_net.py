@@ -1,10 +1,9 @@
-import keras
-from screening_util import *
+import keras, os
 from keras.regularizers import L2, L1
-from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add, MaxPooling2D
 from keras.models import Model  
 from keras.initializers import HeNormal, Constant
-from keras.layers import Conv2D, BatchNormalization, Dense, PReLU
+from keras.layers import Conv2D, BatchNormalization, Dense, PReLU, Dropout
+from keras.layers import BatchNormalization, GlobalAveragePooling2D, Dense, add, MaxPooling2D
 
 
 def create_load_net(file_dir=None):
@@ -46,8 +45,8 @@ def create_load_net(file_dir=None):
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
         
         outputs = Dense(
-            units=2, 
-            activation='softmax',
+            units=1, 
+            activation='sigmoid',
             kernel_initializer=HeNormal())(res_net_layers)
         
         return Model(inputs, outputs)
@@ -85,6 +84,8 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
 
     res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
+    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+
     res_net_layers = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     # adding residual connection
@@ -110,7 +111,7 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
 
     res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
+    res_net_layers = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     # 2nd layer
     res_net_layers = Conv2D( 
@@ -131,10 +132,12 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
 
     projection_connection = BatchNormalization(axis=-1)(projection_connection)
 
+    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+
     # adding residual connection
     res_net_layers = add([res_net_layers, projection_connection])
 
-    res_net_layers = prelu_layer = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
+    res_net_layers = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
     res_net_layers = (res_net_layers)
 
