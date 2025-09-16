@@ -27,19 +27,23 @@ def create_load_net(file_dir=None):
         res_net_layers = MaxPooling2D(pool_size=(3,3), strides=2)(res_net_layers)
 
         res_net_layers = add_identity_block(res_net_layers, filters=64)
-        
+        res_net_layers = add_identity_block(res_net_layers, filters=64)
         res_net_layers = add_identity_block(res_net_layers, filters=64)
         
         res_net_layers = add_projection_block(res_net_layers, filters=128)
-        
+        res_net_layers = add_identity_block(res_net_layers, filters=128)
+        res_net_layers = add_identity_block(res_net_layers, filters=128)
         res_net_layers = add_identity_block(res_net_layers, filters=128)
 
         res_net_layers = add_projection_block(res_net_layers, filters=256)
-
+        res_net_layers = add_identity_block(res_net_layers, filters=256)
+        res_net_layers = add_identity_block(res_net_layers, filters=256)
+        res_net_layers = add_identity_block(res_net_layers, filters=256)
+        res_net_layers = add_identity_block(res_net_layers, filters=256)
         res_net_layers = add_identity_block(res_net_layers, filters=256)
 
         res_net_layers = add_projection_block(res_net_layers, filters=512)
-
+        res_net_layers = add_identity_block(res_net_layers, filters=512)
         res_net_layers = add_identity_block(res_net_layers, filters=512)
 
         res_net_layers = GlobalAveragePooling2D()(res_net_layers)
@@ -83,8 +87,6 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
         kernel_initializer=HeNormal())(res_net_layers)
 
     res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
-
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
 
     res_net_layers = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
 
@@ -132,7 +134,7 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
 
     projection_connection = BatchNormalization(axis=-1)(projection_connection)
 
-    res_net_layers = Dropout(rate=0.1)(res_net_layers)
+    
 
     # adding residual connection
     res_net_layers = add([res_net_layers, projection_connection])
