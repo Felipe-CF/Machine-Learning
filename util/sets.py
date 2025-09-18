@@ -2,7 +2,6 @@ import os, json, random
 import pandas as pd
 import matplotlib as plt
 from util.preprocessing import *
-from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
 
 

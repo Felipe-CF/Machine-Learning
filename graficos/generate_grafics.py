@@ -23,8 +23,6 @@ def generate_grafics(model, figsize=(6, 12), colors = ['red','blue']):
 
         epochs = [x+1 for x in range(len(train))]
 
-        # axes[i].set_title(f'Métrica {title}')
-
         axes[i].plot(epochs, train, label=f'train_{title}', color='red', linestyle='-')
 
         axes[i].plot(epochs, val, label=f'val_{title}', color='blue', linestyle='-')
@@ -55,7 +53,7 @@ if __name__ == '__main__':
 
     checkpoint_dir = os.path.join(file_dir, 'screening_fit_history')
 
-    history_path = os.path.join(checkpoint_dir, 'fit_history_auc_0.9166_val_auc_0.8587.json')
+    history_path = os.path.join(checkpoint_dir, 'history_kfolds.json')
 
     with open(history_path, 'r') as file:
         history = json.loads(file.read())

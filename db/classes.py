@@ -2,10 +2,9 @@ import os
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
-# from sklearn.compose import ColumnTransformer
-# from sklearn.preprocessing import OneHotEncoder
 from PIL import Image, UnidentifiedImageError
 from keras_preprocessing.image import ImageDataGenerator
+from sklearn.model_selection import KFold
 
 
 def create_sets(processing=None):
@@ -67,35 +66,15 @@ if __name__ == '__main__':
 
         kfold_1 = dataframe.loc[dataframe['3'] == 1]
 
-        print('1')
-        print(f"P {(kfold_1['1'] == 1).sum()}")
-        print(f"N {(kfold_1['0'] == 1).sum()}")
-
         kfold_2 = dataframe.loc[dataframe['3'] == 2]
-
-        print('2')
-        print(f"P {(kfold_2['1'] == 1).sum()}")
-        print(f"N {(kfold_2['0'] == 1).sum()}")
-
 
         kfold_3 = dataframe.loc[dataframe['3'] == 3]
 
-        print('3')
-        print(f"P {(kfold_3['1'] == 1).sum()}")
-        print(f"N {(kfold_3['0'] == 1).sum()}")
-
-
         kfold_4 = dataframe.loc[dataframe['3'] == 4]
 
-        print('4')
-        print(f"P {(kfold_4['1'] == 1).sum()}")
-        print(f"N {(kfold_4['0'] == 1).sum()}")
-
         kfold_5 = dataframe.loc[dataframe['3'] == 5]
+        
 
-        print('5')
-        print(f"P {(kfold_5['1'] == 1).sum()}")
-        print(f"N {(kfold_5['0'] == 1).sum()}")
 
 
 
@@ -128,6 +107,10 @@ S ==> column=4
 # print(f"O {(dataframe['Label'] == 'O').sum()}")
 # print(f"S {(dataframe['Label'] == 'S').sum()}")
 # print(f"N {(dataframe['Label'] == 'N').sum()}")
+
+        # print('5')
+        # print(f"P {(kfold_5['1'] == 1).sum()}")
+        # print(f"N {(kfold_5['0'] == 1).sum()}")
 
 
 '''
