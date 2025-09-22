@@ -1,0 +1,52 @@
+Guia de Estudo: Estatística e Probabilidade para Residência em IA (UF do Ceará)
+Este material de estudo foi criado com base no edital, nas provas de iniciação científica e no formulário de fórmulas que você forneceu. O objetivo é simular a abordagem de um professor, focando nos pontos mais relevantes para a prova.
+
+Análise Geral da Prova
+A prova parece equilibrar teoria e prática, exigindo que você não apenas memorize fórmulas, mas entenda a intuição por trás delas e sua aplicação em cenários de Ciência de Dados. Os tópicos de estatística descritiva e testes de hipóteses são cobrados diretamente, enquanto a probabilidade e as distribuições formam a base teórica para a inferência.
+
+1. Estatística Descritiva
+Este é o alicerce para qualquer análise de dados.
+
+Medidas de Tendência Central: Domine o cálculo de Média, Moda e Mediana. A prova de Iniciação Científica 2025.1 incluiu uma questão que pedia para calcular os três valores para um conjunto de dados.
+
+Medidas de Dispersão: Entenda o que o Desvio Padrão e a Variância representam. Eles indicam o quão espalhados os dados estão. As fórmulas não estão no formulário, então revise-as.
+
+Tipos de Variáveis: É crucial saber diferenciar entre variáveis qualitativas e quantitativas (que podem ser discretas ou contínuas). Uma questão em uma das provas pediu para identificar esses tipos de variáveis no Iris Dataset, um exemplo clássico em machine learning.
+
+Visualização de Dados: Entenda a função de gráficos como histogramas e boxplots. O boxplot é especialmente útil para a identificação de outliers, um tópico que foi cobrado em uma das provas.
+
+2. Probabilidade
+A base teórica é fundamental.
+
+Conceitos Fundamentais: Revise o que são espaço amostral e eventos. Entenda a Probabilidade Clássica e as operações entre eventos: união, interseção e eventos mutuamente exclusivos.
+
+Probabilidade Condicional: A probabilidade de um evento ocorrer dado que outro já aconteceu. A fórmula é P(A|B) = P(A ∩ B) / P(B).
+
+Teorema de Bayes: Um tópico central do edital, com uma questão de cálculo na prova. A questão envolve a atualização de uma probabilidade com base em novas informações. A fórmula é P(A|B) = P(B|A)P(A) / P(B).
+
+3. Distribuições e Funções
+A prova pode exigir o uso de tabelas de distribuição.
+
+Distribuições Discretas e Contínuas: O edital menciona que ambos os tipos serão cobrados. As tabelas fornecidas (Tabela.pdf) incluem as distribuições Normal, t de Student, Qui-quadrado e F, indicando a relevância delas.
+
+Função Densidade de Probabilidade (f.d.p.) e Função de Distribuição Acumulada (F.d.a.): Entenda a diferença entre elas. A f.d.p. f(x) descreve a probabilidade em um ponto, enquanto a F.d.a. F(x) dá a probabilidade acumulada P(X ≤ x).
+
+4. Inferência Estatística
+A etapa final, onde a teoria é aplicada para tomar decisões.
+
+Intervalos de Confiança: O formulário de fórmulas inclui a fórmula para o intervalo de confiança da média. Saiba como construir e interpretar esses intervalos.
+
+Testes de Hipóteses Simples: Este é um dos tópicos mais importantes. O formulário de fórmulas tem uma seção dedicada a regras de decisão (Regra de decisão (Ho é falsa se)) para diferentes tipos de testes (médias, proporções, variâncias). A prova pode exigir que você identifique o teste correto para um problema dado e use as tabelas de distribuição para encontrar os valores críticos.
+
+Previsão de Tópicos e Dicas de Estudo
+Minha previsão é que a prova terá um foco prático, ligando conceitos estatísticos a problemas de Análise de Dados e Aprendizado de Máquina.
+
+Foco em Aplicação: As questões das provas mostram que as métricas estatísticas, como RMSE e R², são usadas para avaliar modelos de machine learning. Entenda essa conexão.
+
+Entenda a Intuição: Não se limite a decorar fórmulas. Entenda o que cada valor, como o p-value em um teste de hipóteses, realmente significa e como ele te ajuda a tomar uma decisão.
+
+Use os Materiais para Prática: Resolva as questões das provas passadas e use o formulário de fórmulas para identificar qual fórmula se aplica a cada problema.
+
+Este guia é um excelente ponto de partida para organizar seu estudo. A chave para o sucesso será a prática e a conexão dos conceitos com as aplicações em IA.
+
+Espero que este material seja útil na sua preparação! Se precisar de mais alguma coisa, é só me dizer.
