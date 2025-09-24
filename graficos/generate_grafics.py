@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
     checkpoint_dir = os.path.join(file_dir, 'screening_fit_history')
 
-    history_path = os.path.join(checkpoint_dir, 'history_kfolds.json')
+    history_path = os.path.join(checkpoint_dir, 'cross_validation_history.json')
 
     with open(history_path, 'r') as file:
         history = json.loads(file.read())

@@ -7,73 +7,66 @@ from keras_preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import KFold
 
 
-def create_sets(processing=None):
-    data_gen = ImageDataGenerator( #objeto com regras para o pré-processamento de imagens
-        rescale=1./255, 
-        # augmentation
-        shear_range=0.2, # distorção de inclinação
-        zoom_range=0.2, # zoom in e out aleatorio
-        horizontal_flip=True, # aleatorio
-        vertical_flip=True, # aleatorio
-        brightness_range=[0.2, 0.8],
-        samplewise_std_normalization=True,
-        validation_split=0.2, # separação do subset de Validation
-    )
-
+if __name__ == '__main__':
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    dataset_dir = file_dir + '\\db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
+    dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI'
 
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
+    # dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
+    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description.csv')
 
     dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
-    training_set = data_gen.flow_from_dataframe(
-        directory= dataset_dir + '\\imgs',
-        dataframe=dataframe,
-        y_col=['0', '1'],
-        x_col='2',
-        subset='training',
-        batch_size=16,
-        shuffle=True,
-        class_mode='raw',
-        target_size=(320, 320)
+    print(f"U>10 {(dataframe['Label'] == 'U>10').sum()}")
+    print(f"U3-10 {(dataframe['Label'] == 'U3-10').sum()}")
+    print(f"E {(dataframe['Label'] == 'E').sum()}")
+    print(f"AU {(dataframe['Label'] == 'AU').sum()}")
+    print(f"O {(dataframe['Label'] == 'O').sum()}")
+    print(f"S {(dataframe['Label'] == 'S').sum()}")
+    print(f"N {(dataframe['Label'] == 'N').sum()}")
+
+    dataframe['Label'].replace(
+        {
+            "U>10" : 'P',
+            "U3-10" : 'P',
+            "E" : 'P', 
+            "AU" : 'P', 
+            "O" : 'P',
+            "S" : 'P' 
+        }, inplace=True
     )
 
-    validation_set = data_gen.flow_from_dataframe(
-        directory= dataset_dir + '\\imgs',
-        dataframe=dataframe,
-        y_col=['0', '1'],
-        x_col='2',
-        target_size=(320, 320),
-        batch_size=16,
-        class_mode='raw',
-        shuffle=True,
-        subset='validation'
-        )
+    # dataframe.to_csv('DataCrohnIPI_2021_03\\DataCrohnIPI\\CrohnIPI_description_processed.csv')
+
+    print(f"1 {dataframe[(dataframe['Fold'] == 1) & (dataframe['Label'] == 'N')].shape[0]}")
+    print(f"1 {dataframe[(dataframe['Fold'] == 1) & (dataframe['Label'] == 'P')].shape[0]}")
+    print(f"2 {dataframe[(dataframe['Fold'] == 2) & (dataframe['Label'] == 'N')].shape[0]}")
+    print(f"2 {dataframe[(dataframe['Fold'] == 2) & (dataframe['Label'] == 'P')].shape[0]}")
+    print(f"3 {dataframe[(dataframe['Fold'] == 3) & (dataframe['Label'] == 'N')].shape[0]}")
+    print(f"3 {dataframe[(dataframe['Fold'] == 3) & (dataframe['Label'] == 'P')].shape[0]}")
+    print(f"4 {dataframe[(dataframe['Fold'] == 4) & (dataframe['Label'] == 'N')].shape[0]}")
+    print(f"4 {dataframe[(dataframe['Fold'] == 4) & (dataframe['Label'] == 'P')].shape[0]}")
+    print(f"5 {dataframe[(dataframe['Fold'] == 5) & (dataframe['Label'] == 'N')].shape[0]}")
+    print(f"5 {dataframe[(dataframe['Fold'] == 5) & (dataframe['Label'] == 'P')].shape[0]}")
+
+
+
+    print(f"1 {(dataframe['Fold'] == 1 and dataframe['Label'] == 'P').sum()}")
+    # print(f"2 {(dataframe['Fold'] == 2).sum()}")
+    # print(f"3 {(dataframe['Fold'] == 3).sum()}")
+    # print(f"4 {(dataframe['Fold'] == 4).sum()}")
+    # print(f"5 {(dataframe['Fold'] == 5).sum()}")
+
+    # kfold_1 = dataframe.loc[dataframe['3'] == 1]
+
+    # kfold_2 = dataframe.loc[dataframe['3'] == 2]
+
+    # kfold_3 = dataframe.loc[dataframe['3'] == 3]
+
+    # kfold_4 = dataframe.loc[dataframe['3'] == 4]
+
+    # kfold_5 = dataframe.loc[dataframe['3'] == 5]
     
-    return training_set, validation_set
-
-
-if __name__ == '__main__':
-        file_dir = os.path.dirname(os.path.abspath(__file__))
-
-        dataset_dir = file_dir + '\\DataCrohnIPI_2021_03\\DataCrohnIPI'
-
-        dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
-
-        dataframe = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
-
-        kfold_1 = dataframe.loc[dataframe['3'] == 1]
-
-        kfold_2 = dataframe.loc[dataframe['3'] == 2]
-
-        kfold_3 = dataframe.loc[dataframe['3'] == 3]
-
-        kfold_4 = dataframe.loc[dataframe['3'] == 4]
-
-        kfold_5 = dataframe.loc[dataframe['3'] == 5]
-        
 
 
 
@@ -100,13 +93,7 @@ S ==> column=4
 95   0.0  0.0  0.0  1.0  0.0  0.0  0.0  00098.jpg  5
 158  0.0  0.0  0.0  0.0  1.0  0.0  0.0  00161.jpg  2
 
-# print(f"U>10 {(dataframe['Label'] == 'U>10').sum()}")
-# print(f"U3-10 {(dataframe['Label'] == 'U3-10').sum()}")
-# print(f"E {(dataframe['Label'] == 'E').sum()}")
-# print(f"AU {(dataframe['Label'] == 'AU').sum()}")
-# print(f"O {(dataframe['Label'] == 'O').sum()}")
-# print(f"S {(dataframe['Label'] == 'S').sum()}")
-# print(f"N {(dataframe['Label'] == 'N').sum()}")
+
 
         # print('5')
         # print(f"P {(kfold_5['1'] == 1).sum()}")
