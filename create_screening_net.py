@@ -126,8 +126,6 @@ def add_projection_block(res_net_layers, filters=64,kernel_size=(3, 3)):
 
     projection_connection = BatchNormalization(axis=-1)(projection_connection)
 
-    
-
     # adding residual connection
     res_net_layers = add([res_net_layers, projection_connection])
 

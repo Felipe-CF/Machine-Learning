@@ -2,8 +2,8 @@ import keras
 from util.sets import *
 from util.history import *
 from util.hyperparameters import *
-import numpy as np, random
-from create_screening_net import *
+from storage.teste import *
+# from create_screening_net import *
 from keras.optimizers import SGD
 from keras.losses import BinaryCrossentropy
 
@@ -20,6 +20,8 @@ if __name__ == '__main__':
     )
 
     kfolds = dataframe_preprocessing()
+
+    print(screening_net.summary())
 
     for _ in range(5):
 
@@ -44,6 +46,6 @@ if __name__ == '__main__':
             callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
         )
 
-    save_history(history=screening_net.history, file_dir=file_dir, fold_test_n=fold_test_n)
+    # save_history(history=screening_net.history, file_dir=file_dir, fold_test_n=fold_test_n)
 
 

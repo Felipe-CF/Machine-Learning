@@ -88,8 +88,6 @@ def add_identity_block(res_net_layers, filters=64, kernel_size=(3, 3)):
 
     res_net_layers = BatchNormalization(axis=-1)(res_net_layers)
 
-    res_net_layers = PReLU(shared_axes=[1, 2], alpha_initializer=Constant(0.25))(res_net_layers)
-
     # adding residual connection
     res_net_layers = add([res_net_layers, skip_connection])
 
