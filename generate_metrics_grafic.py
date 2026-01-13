@@ -9,37 +9,32 @@ def generate_metrics_grafic(history, labels, fold, figsize=(40, 40)):
 
     epochs = [x+1 for x in range(len(history))]
 
-    linestyles = ['solid', 'dashed', 'dashed']
+    linestyles = ['solid', '-.']
 
-    alphas = [0.4, 0.6, 1]
-
-    for label, linestyle, alpha in zip(labels, linestyles, alphas):
+    for label, linestyle, in zip(labels, linestyles):
         metric = history[label][fold]
 
         epochs = [x+1 for x in range(len(metric))]
 
         color = 'grey'
 
-        if linestyle == 'dotted':
+        if linestyle == 'solid':
             color = 'black'
-
-            linestyle = 'dashed'
 
         plt.plot(
             epochs, 
             history[label][fold], 
-            label=f'val_{label}', 
+            label=f'{label}', 
             color=color, 
             linestyle=linestyle,
-            alpha=alpha,
-            linewidth=2
+            linewidth=3
             )
 
     plt.xlabel('Épocas' , fontsize=20)
 
     plt.ylabel("Métricas" , fontsize=20)
 
-    plt.legend()
+    plt.legend(fontsize=18, loc='lower right')
 
     plt.grid(True)
 
@@ -60,7 +55,7 @@ if __name__ == '__main__':
 
     for fold in folds: 
         generate_metrics_grafic(
-            labels=["AUC","Accuracy"],
+            labels=["AUC","Acuracia"],
             history=history,
             fold=fold
         )

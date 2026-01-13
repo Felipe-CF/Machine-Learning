@@ -18,9 +18,9 @@ auc_sem = history['AUC']['sem_fold'][0:49]
 
 auc_com = history['AUC']['com_fold']
 
-accuracy_sem = history['Accuracy']['sem_fold'][0:49]
+accuracy_sem = history['Acuracia']['sem_fold'][0:49]
 
-accuracy_com = history['Accuracy']['com_fold']
+accuracy_com = history['Acuracia']['com_fold']
 
 epochs = [x+1 for x in range(len(auc_sem))]
 
@@ -31,13 +31,16 @@ plt.plot(
     auc_sem, 
     label=f'AUC (Sem validação cruzada)', 
     color='grey', 
+    alpha=0.8, 
     linestyle='solid',
+    linewidth=3
     )
 
 plt.plot(
     epochs, 
     accuracy_sem, 
-    label=f'Accuracy (Sem validação cruzada)', 
+    linewidth=2,
+    label=f'Acuracia (Sem validação cruzada)', 
     color='grey',
     linestyle='-.',
     )
@@ -47,6 +50,7 @@ plt.plot(
     auc_com, 
     label=f'AUC (Com validação cruzada)', 
     color='black', 
+    linewidth=3,
     alpha=0.8, 
     linestyle='solid',
     )
@@ -54,17 +58,18 @@ plt.plot(
 plt.plot(
     epochs, 
     accuracy_com, 
-    label=f'Accuracy (Com validação cruzada)', 
+    label=f'Acuracia (Com validação cruzada)', 
     color='black', 
-    alpha=0.8, 
+    linewidth=2,
     linestyle='-.',
+    
     )
 
 plt.xlabel('Épocas' , fontsize=20)
 
 plt.ylabel("Métricas" , fontsize=20)
 
-plt.legend()
+plt.legend(fontsize=18)
 
 plt.grid(True)
 

@@ -1,0 +1,1 @@
+{"val_AUC": {"mean": 0.912, "std_desv": 0.003}, "val_Accuracy": {"mean": 0.8353, "std_desv": 0.0082}, "val_Precision": {"mean": 0.8353, "std_desv": 0.0082}, "val_Recall": {"mean": 0.8353, "std_desv": 0.0082}, "val_F1_score": {"mean": 0.8333, "std_desv": 0.0082}}

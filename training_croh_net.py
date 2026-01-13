@@ -1,17 +1,19 @@
 import keras
+import numpy as np
 from util.sets import *
 from util.history import *
 from util.hyperparameters import *
-from storage.teste import *
-# from create_screening_net import *
+# from storage.teste import *
+from create_screening_net import *
 from keras.optimizers import SGD
 from keras.losses import BinaryCrossentropy
+from keras_preprocessing import image
 
 
 if __name__ == '__main__':
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    screening_net = create_load_net()
+    screening_net = create_load_net(file_dir=file_dir)
 
     screening_net.compile(
         optimizer=SGD(learning_rate=0.001, momentum=0.9, name='SGD', weight_decay=0.0001, nesterov=True), 
@@ -46,6 +48,6 @@ if __name__ == '__main__':
             callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
         )
 
-    # save_history(history=screening_net.history, file_dir=file_dir, fold_test_n=fold_test_n)
+    save_history(history=screening_net.history, file_dir=file_dir, fold_test_n=fold_test_n)
 
 
