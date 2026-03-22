@@ -2,25 +2,29 @@ import os, json
 import matplotlib.pyplot as plt
 from metrics_class import ModelMetrics
 
+plt.rcParams['font.family'] = 'serif'
+
+plt.rcParams['font.serif'] = ['Times New Roman']
+
+plt.rcParams['font.size'] = 20
 
 def generate_training_grafic_history(metrics,  labels, figsize=(20, 20)):
 
-    plt.figure(figsize=figsize) 
+    plt.figure(figsize=figsize)
 
     epochs = [x+1 for x in range(len(metrics[0]))]
 
     # for metric, label in zip(metrics, labels):
 
-    
     plt.plot(epochs, metrics[0], label=f'{labels[0]}', color='black', linewidth=3,linestyle='solid')
 
     plt.plot(epochs, metrics[1], label=f'{labels[1]}', color='grey', linewidth=3, linestyle='solid')
 
     # plt.plot(epochs, metrics[2], label=f'cross_val_{labels[2]}', color='grey', linestyle='solid')
-    
-    plt.xlabel('Épocas' , fontsize=25)
 
-    plt.ylabel("Métricas" , fontsize=25)
+    plt.xlabel('Epochs')
+
+    # plt.ylabel("Métricas" , fontsize=25)
 
     plt.legend(fontsize=18)
 
@@ -41,7 +45,7 @@ if __name__ == '__main__':
 
     metrics = [history['val_AUC'], history['val_Accuracy']]
 
-    labels = ["AUC","Acuracia"]
+    labels = ["AUC","Accuracy"]
 
     generate_training_grafic_history(
         labels=labels,
@@ -49,4 +53,4 @@ if __name__ == '__main__':
     )
 
     x=2
-    
+
