@@ -20,24 +20,29 @@ def dataframe_preprocessing():
         {
             "U>10" : 'P',
             "U3-10" : 'P',
-            "E" : 'P', 
-            "AU" : 'P', 
+            "E" : 'P',
+            "AU" : 'P',
             "O" : 'P',
-            "S" : 'P' 
+            "S" : 'P'
         }, inplace=True
     )
+
 
     df = ColumnTransformer(transformers=[('OneHot', OneHotEncoder(), [1])], remainder='passthrough').fit_transform(df)
 
     df = pd.DataFrame(df)
 
     df[0] = df[0].astype(float)
-    
+
     df[1] = df[1].astype(float)
 
     df = pd.DataFrame(df)
 
     folds = []
+
+    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
+
+    df = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
 
     for i in range(5):
         kfold = {

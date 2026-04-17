@@ -1,3 +1,5 @@
+import os
+os.environ['KERAS_BACKEND'] = 'torch'
 import keras
 import numpy as np
 from util.sets import *
@@ -16,8 +18,8 @@ if __name__ == '__main__':
     screening_net = create_load_net(file_dir=file_dir)
 
     screening_net.compile(
-        optimizer=SGD(learning_rate=0.001, momentum=0.9, name='SGD', weight_decay=0.0001, nesterov=True), 
-        loss=BinaryCrossentropy(), 
+        optimizer=SGD(learning_rate=0.001, momentum=0.9, name='SGD', weight_decay=0.0001, nesterov=True),
+        loss=BinaryCrossentropy(),
         metrics=screening_metrics()
     )
 
@@ -38,13 +40,13 @@ if __name__ == '__main__':
         print(f'KFOLD {fold_test_n}')
 
         screening_net.fit(
-            training_set, 
-            steps_per_epoch=steps_per_epoch, 
+            training_set,
+            steps_per_epoch=steps_per_epoch,
             epochs=100,
             validation_data=validation_set,
             validation_steps=43,
             verbose=1,
-            class_weight=screening_class_weights(), 
+            class_weight=screening_class_weights(),
             callbacks=[model_checkpoint(checkpoint_dir), learning_rate_plateau(), early_stopping()]
         )
 
