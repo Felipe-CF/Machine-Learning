@@ -1,10 +1,10 @@
 import os, json
 
 
-def save_history(file_dir, history, fold_test_n):
+def save_history(file_dir, history, fold_test_n, history_dir_name='screening_fit_history'):
     file_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    history_path = os.path.join(file_dir, 'screening_fit_history')
+    history_path = os.path.join(file_dir, history_dir_name)
 
     val_auc = history.history['val_AUC']
 
@@ -16,7 +16,7 @@ def save_history(file_dir, history, fold_test_n):
 
     history_path = history_path + f'\\kfold_{fold_test_n}_fit_history_auc_{auc:.4f}_val_auc_{val_auc:.4f}.json'
 
-    with open(history_path, 'w') as file:   
+    with open(history_path, 'w') as file:
         file.write(json.dumps(history.history))
 
     print('Last history of training saved sucessfull!')

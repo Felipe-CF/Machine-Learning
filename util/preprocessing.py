@@ -40,10 +40,6 @@ def dataframe_preprocessing():
 
     folds = []
 
-    dataframe_path = os.path.join(dataset_dir, 'CrohnIPI_description_screening_processed.csv')
-
-    df = pd.read_csv(dataframe_path, sep=',', encoding='iso-8859-1')
-
     for i in range(5):
         kfold = {
             'fold': pd.DataFrame(df[df[3] == i+1]),
