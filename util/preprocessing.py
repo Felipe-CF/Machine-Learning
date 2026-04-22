@@ -40,13 +40,21 @@ def dataframe_preprocessing():
 
     folds = []
 
+    json_folds = {}
+
     for i in range(5):
+        fold_df = pd.DataFrame(df[df[3] == i+1])
+
         kfold = {
-            'fold': pd.DataFrame(df[df[3] == i+1]),
-            'test': False,
-            'fold_n': i+1
+            'validation': False,
+            'fold': fold_df.to_json(orient='records'),
         }
+
+        json_folds[f'fold{i+1}'] = kfold
 
         folds.append(kfold)
 
-    return folds
+    path_folds = 'db\\DataCrohnIPI_2021_03'
+
+    with open('db\\DataCrohnIPI_2021_03\\dados.json', 'w', encoding='utf-8') as file:
+        json.dump(json_folds, file, ensure_ascii=False, indent=4)

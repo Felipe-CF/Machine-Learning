@@ -1,35 +1,38 @@
 import os, json, random
 import pandas as pd
-import matplotlib as plt
 from util.preprocessing import *
 from keras_preprocessing.image import ImageDataGenerator
 
 
-def create_sets(kfolds):
+DATASET_DIR_IMG = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '\\db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
+
+
+def create_sets(path_folds, fold_test):
     training_df, validation_fold =  None, None
 
-    fold_test_n = 1
+    with open(path_folds, 'r', encoding='utf-8') as file:
+        kfolds = json.loads(file.read())
 
-    for i, fold in enumerate(kfolds):
+    kfolds[f'fold{fold_test}']['validation'] = True
 
-        if fold['test'] is False:
-            fold['test'] = True
+    new_fold_validation = kfolds[f'fold{fold_test}']
 
-            validation_fold = kfolds.pop(i)
+    with open(path_folds, 'w', encoding='utf-8') as file:
+        json.dump(kfolds, file, ensure_ascii=False, indent=4)
 
-            fold_test_n = validation_fold['fold_n']
+    validation_fold = pd.read_json(kfolds[f'fold{fold_test}']['fold'])
 
-            break
-    
-    training_df = pd.concat([fold['fold'] for fold in kfolds])
+    check = f'fold{fold_test}'
 
-    validation_df = validation_fold['fold']
+    training_df = pd.concat([pd.read_json(fold['fold']) for key, fold in kfolds.items() if key != check])
 
-    kfolds.append(validation_fold)
+    kfolds = None
+
+    fold_test += 1
 
     #objeto com regras para o pré-processamento de imagens
-    data_gen = ImageDataGenerator( 
-        rescale=1./255, 
+    data_gen = ImageDataGenerator(
+        rescale=1./255,
         # augmentation
         shear_range=0.2, # distorção de inclinação
         zoom_range=0.2, # zoom in e out aleatorio
@@ -40,12 +43,8 @@ def create_sets(kfolds):
         samplewise_std_normalization=True,
     )
 
-    file_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    
-    dataset_dir = file_dir + '\\db\\DataCrohnIPI_2021_03\\DataCrohnIPI\\'
-
     training_set = data_gen.flow_from_dataframe(
-        directory= dataset_dir + '\\imgs',
+        directory= DATASET_DIR_IMG + '\\imgs',
         dataframe=training_df,
         y_col=[0, 1],
         x_col=2,
@@ -56,8 +55,8 @@ def create_sets(kfolds):
     )
 
     validation_set = data_gen.flow_from_dataframe(
-        directory= dataset_dir + '\\imgs',
-        dataframe=validation_df,
+        directory= DATASET_DIR_IMG + '\\imgs',
+        dataframe=validation_fold,
         y_col=[0, 1],
         x_col=2,
         target_size=(320, 320),
@@ -65,8 +64,8 @@ def create_sets(kfolds):
         class_mode='raw',
         shuffle=True,
         )
-    
-    return training_set, validation_set, fold_test_n
+
+    return training_set, validation_set, fold_test
 
 
 

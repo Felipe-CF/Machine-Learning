@@ -1,27 +1,19 @@
 import os
 import numpy as np
-
-# ❌ REMOVE backend torch
-# os.environ['KERAS_BACKEND'] = 'torch'
-
 import keras
-
 from util.sets import *
 from util.history import *
 from util.hyperparameters import *
-
-from keras.applications import MobileNetV2
+from keras.applications import MobileNetV2, EfficientNetB0
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras.optimizers import SGD
-from keras.losses import BinaryCrossentropy
+from keras.losses import BinaryCrossentropy, CategoricalCrossentropy
 
-# =========================
-# MOBILE NET
-# =========================
+
 def create_screening_mobilenet():
 
-    base_model = MobileNetV2(
+    base_model = EfficientNetB0(
         weights=None,
         include_top=False,
         input_shape=(320, 320, 3)
@@ -37,24 +29,25 @@ def create_screening_mobilenet():
     return model
 
 
-# =========================
-# MAIN
-# =========================
 if __name__ == '__main__':
 
     file_dir = os.path.dirname(os.path.abspath(__file__))
 
-    kfolds = dataframe_preprocessing()
+    dataframe_preprocessing()
 
-    for _ in range(5):
+    fold_test = 3
+
+    for _ in range(4):
 
         print("\n==============================")
 
-        training_set, validation_set, fold_test_n = create_sets(kfolds)
+        path_folds = 'db\\DataCrohnIPI_2021_03\\dados.json'
+
+        training_set, validation_set, fold_test = create_sets(path_folds, fold_test)
 
         checkpoint_dir = os.path.join(file_dir, 'checkpoints_mobile')
 
-        print(f'KFOLD {fold_test_n}')
+        print(f'KFOLD{fold_test}')
 
         # ✅ cria modelo NOVO por fold
         screening_net = create_screening_mobilenet()
@@ -66,11 +59,9 @@ if __name__ == '__main__':
                 nesterov=True,
                 weight_decay=0.0001
             ),
-            loss=BinaryCrossentropy(),
+            loss=CategoricalCrossentropy(),
             metrics=screening_metrics()
         )
-
-        print(screening_net.summary())
 
         steps_per_epoch = training_set.n // 16
         validation_steps = validation_set.n // 16
@@ -78,7 +69,7 @@ if __name__ == '__main__':
         history = screening_net.fit(
             training_set,
             steps_per_epoch=steps_per_epoch,
-            epochs=100,
+            epochs=1,
             validation_data=validation_set,
             validation_steps=validation_steps,
             verbose=1,
@@ -93,6 +84,10 @@ if __name__ == '__main__':
         save_history(
             history=history,
             file_dir=file_dir,
-            fold_test_n=fold_test_n,
+            fold_test_n=fold_test,
             history_dir_name='mobile_fit_history'
         )
+
+        break
+
+        fold_test += 1
