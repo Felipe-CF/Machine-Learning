@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     dataframe_preprocessing()
 
-    fold_test = 3
+    fold_test = 1
 
     for _ in range(5):
 
@@ -87,7 +87,5 @@ if __name__ == '__main__':
             fold_test_n=fold_test,
             history_dir_name='efficient_fit_history'
         )
-
-        break
 
         fold_test += 1
