@@ -28,8 +28,6 @@ def create_sets(path_folds, fold_test):
 
     kfolds = None
 
-    fold_test += 1
-
     #objeto com regras para o pré-processamento de imagens
     data_gen = ImageDataGenerator(
         rescale=1./255,
