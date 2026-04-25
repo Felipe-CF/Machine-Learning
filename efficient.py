@@ -19,6 +19,9 @@ def create_screening_efficient():
         input_shape=(320, 320, 3)
     )
 
+    for layer in base_model.layers:
+        layer.trainable = True
+
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
 
