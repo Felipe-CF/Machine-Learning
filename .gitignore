@@ -127,7 +127,9 @@ celerybeat.pid
 .env
 .venv
 env/
+vscode/
 venv/
+venv310/
 ENV/
 env.bak/
 venv.bak/
@@ -170,6 +172,7 @@ poetry.toml
 # ruff
 .ruff_cache/
 
+<<<<<<< HEAD
 # LSP config files
 pyrightconfig.json
 
@@ -197,3 +200,13 @@ venv312/
 *.tiff
 *.svg
 *.webp
+=======
+# PyPI configuration file
+.pypirc
+
+*.vscode
+
+# ignoring datasets
+*.jpg
+*.db
+>>>>>>> redes_neurais
